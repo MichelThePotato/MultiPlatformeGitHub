@@ -17,21 +17,6 @@ const App = () => {
   const Stack = createNativeStackNavigator();
   const navigationRef = useNavigationContainerRef();
 
-  const [cameraPermissionStatus, setCameraPermissionStatus] =
-    useState('not-determined');
-
-  const requestCameraPermission = useCallback(async () => {
-    console.log('Requesting camera permission...');
-    const permission = await Camera.requestCameraPermission();
-    console.log(`Camera permission status: ${permission}`);
-
-    if (permission === 'denied') await Linking.openSettings();
-    setCameraPermissionStatus(permission);
-  }, []);
-
-  useEffect(() => {
-    if (cameraPermissionStatus === 'authorized') navigationRef.navigate('CameraScreen');
-  }, [cameraPermissionStatus, navigationRef]);
 
   return (
     <NavigationContainer ref={navigationRef}>
@@ -63,24 +48,14 @@ const App = () => {
         </Stack.Screen>
         <Stack.Screen name='Preference' component={Preference}>
         </Stack.Screen>
-        <Stack.Screen name='ListeEvenementInterface' component={ListeEvenementInterface} options={{
-          headerRight: ({ }) => (
-            <TouchableOpacity
-              onPress={requestCameraPermission}>
-              <Image
-                style={{ height: 30, width: 30 }}
-                source={require('./camera1.png')}
-                resizeMode='contain'
-              />
-            </TouchableOpacity>
-          )
-        }}>
+        <Stack.Screen name='ListeEvenementInterface' component={ListeEvenementInterface}
+        >
         </Stack.Screen>
         <Stack.Screen name='CameraScreen' component={CameraScreen}>
         </Stack.Screen>
         <Stack.Screen name='PermissionScreen' component={PermissionScreen}>
         </Stack.Screen>
-        <Stack.Screen name='Ajouterevent' component={Ajouterevent}/>
+        <Stack.Screen name='Ajouterevent' component={Ajouterevent} />
 
       </Stack.Navigator>
     </NavigationContainer >
