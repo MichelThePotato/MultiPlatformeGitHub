@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Button } from 'react-native'
 import React, { useEffect, useState, useRef } from 'react'
 import { useCameraDevices, Camera } from 'react-native-vision-camera'
-import ListeEvenement from './ListeEvenement'
+
 import { CameraRoll } from '@react-native-camera-roll/camera-roll';
 
 

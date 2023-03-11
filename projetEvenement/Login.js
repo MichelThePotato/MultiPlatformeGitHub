@@ -18,7 +18,7 @@ const Login = ({ navigation }) => {
     const confirmerUser = async () => {
         if (await verifyUsers(email, password)) {
           // setLogedon(true)
-          navigation.navigate('ListeEvenement');
+          navigation.navigate('ListeEvenementInterface');
         } else {
           console.log('Rip');
         }

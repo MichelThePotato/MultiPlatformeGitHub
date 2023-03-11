@@ -5,10 +5,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './Login';
 import SignUp from './SignUp';
 import Preference from './Preference';
-import ListeEvenement from './ListeEvenement';
+import ListeEvenementInterface from './ListeEvenementInterface';
 import CameraScreen from './CameraScreen';
 import PermissionScreen from './PermissionScreen';
-import { useCameraDevices, Camera } from 'react-native-vision-camera'
+import { useCameraDevices, Camera } from 'react-native-vision-camera';
+import Ajouterevent from './ajouterevent';
+
 
 
 const App = () => {
@@ -61,7 +63,7 @@ const App = () => {
         </Stack.Screen>
         <Stack.Screen name='Preference' component={Preference}>
         </Stack.Screen>
-        <Stack.Screen name='ListeEvenement' component={ListeEvenement} options={{
+        <Stack.Screen name='ListeEvenementInterface' component={ListeEvenementInterface} options={{
           headerRight: ({ }) => (
             <TouchableOpacity
               onPress={requestCameraPermission}>
@@ -78,6 +80,8 @@ const App = () => {
         </Stack.Screen>
         <Stack.Screen name='PermissionScreen' component={PermissionScreen}>
         </Stack.Screen>
+        <Stack.Screen name='Ajouterevent' component={Ajouterevent}/>
+
       </Stack.Navigator>
     </NavigationContainer >
   )
