@@ -1,19 +1,28 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput } from 'react-native';
+import React from 'react';
+import {verifyUsers} from './Storage';
 
 const Login = ({ navigation }) => {
 
     const [email, setEmail] = React.useState("")
-    const [pass, setPass] = React.useState("")
+    const [password, setPassword] = React.useState("")
 
     const onTextChange = text => {
         setEmail(text)
     }
 
     const onTextChange2 = text => {
-        setPass(text)
+        setPassword(text)
     }
 
+    const confirmerUser = async () => {
+        if (await verifyUsers(email, password)) {
+          // setLogedon(true)
+          navigation.navigate('ListeEvenement');
+        } else {
+          console.log('Rip');
+        }
+      };
     return (
         <View style={styles.main_contain}>
 
@@ -31,8 +40,9 @@ const Login = ({ navigation }) => {
                 <TextInput
                     style={{ height: 40 }}
                     placeholder={"Password"}
+                    secureTextEntry={true}
                     onChangeText={onTextChange2}
-                    defaultValue={pass} />
+                    defaultValue={password} />
             </View>
 
             <View >
@@ -44,11 +54,11 @@ const Login = ({ navigation }) => {
                 </TouchableOpacity>
             </View>
 
-            <View style={styles.boutonLogin}>
+            <View style={styles.boutonLogin}>   
                 <TouchableOpacity
-                    //disabled={!email || !pass}
+                    disabled={!email || !password}
                     onPress={() =>
-                        navigation.navigate('ListeEvenement')
+                        confirmerUser()
 
                     }>
                     <Text style={styles.boutonTextStyle} >LOGIN</Text>
@@ -81,7 +91,7 @@ const styles = StyleSheet.create({
         width: "80%",
 
     },
-
+   
     boutonLogin: {
         margin: 12,
         padding: 10,
