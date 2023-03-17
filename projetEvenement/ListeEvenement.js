@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, DrawerLayoutAndroid, Button, TouchableOpacity, Image } from 'react-native'
+import { PermissionsAndroid, StyleSheet, Text, View, ScrollView, DrawerLayoutAndroid, Button, TouchableOpacity, Image } from 'react-native'
 import React, { useState, useEffect, useCallback, useRef } from 'react'
 import {
     createTable,
@@ -7,6 +7,10 @@ import {
     savestoreItem,
 } from './db-services';
 import { useNavigation } from '@react-navigation/native';
+
+import { Camera } from 'react-native-vision-camera';
+
+
 
 const ListeEvenement = () => {
     const [data, setData] = useState([]);
@@ -59,20 +63,34 @@ const ListeEvenement = () => {
     }, []);
 
     useEffect(() => {
-        if (cameraPermissionStatus === 'authorized') navigation.replace('CameraScreen');
+        if (cameraPermissionStatus === 'authorized')
+            navigation.replace('CameraScreen');
     }, [cameraPermissionStatus, navigation]);
 
 
 
     const navigationView = () => (
-        <View style={[styles.container, styles.navigationContainer]}>
-            <Text style={styles.paragraph}>I'm in the Drawer!</Text>
+        <View style={{ flex: 1 }}>
             <TouchableOpacity
 
                 onPress={() => { navigation.navigate('Preference') }}>
+                <View style={{ flexDirection: "row" }}>
+
+                    <Image
+                        style={styles.bordure}
+                        source={require('./setting2.png')}
+                        resizeMode='contain'
+                    />
+                    <Text>Preference</Text>
+                </View>
+
+            </TouchableOpacity>
+            <TouchableOpacity
+
+                onPress={requestCameraPermission}>
                 <Image
-                    style={{ height: 30, width: 30 }}
-                    source={require('./setting2.png')}
+                    style={styles.bordure}
+                    source={require('./camera1.png')}
                     resizeMode='contain'
                 />
             </TouchableOpacity>
@@ -98,4 +116,13 @@ const ListeEvenement = () => {
 
 export default ListeEvenement
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+
+    bordure: {
+        height: 50,
+        width: 50,
+        margin: 10,
+
+
+    }
+})

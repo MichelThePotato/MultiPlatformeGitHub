@@ -10,14 +10,28 @@ import CameraScreen from './CameraScreen';
 import PermissionScreen from './PermissionScreen';
 import { useCameraDevices, Camera } from 'react-native-vision-camera';
 import Ajouterevent from './ajouterevent';
+import ListeEvenement from './ListeEvenement';
 
 
 
 const App = () => {
   const Stack = createNativeStackNavigator();
   const navigationRef = useNavigationContainerRef();
+  const [cameraPermission, setCameraPermission] = useState();
 
+  useEffect(() => {
+    Camera.getCameraPermissionStatus().then(setCameraPermission);
+  }, []);
 
+  console.log(`Re-rendering Navigator. Camera: ${cameraPermission}`);
+  if (cameraPermission == null) {
+    // still loading
+    return null;
+  }
+
+  const showPermissionsPage = cameraPermission !== 'authorized';
+
+  console.log(showPermissionsPage);
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator>

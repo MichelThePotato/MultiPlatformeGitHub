@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View, Button } from 'react-native'
+import { StyleSheet, Text, View, Button, PermissionsAndroid, TouchableOpacity, Image } from 'react-native'
 import React, { useEffect, useState, useRef } from 'react'
 import { useCameraDevices, Camera } from 'react-native-vision-camera'
 
 import { CameraRoll } from '@react-native-camera-roll/camera-roll';
-
+import { pushNotif } from './NotificationScreen';
 
 
 const NoCameraFound = () => {
@@ -35,34 +35,14 @@ const CameraScreen = () => {
 
     const onTakePicture = async () => {
         console.log('on take picture');
-
-        const hasPermission = await requestSavePermission();
-        if (!hasPermission) {
-            Alert.alert(
-                'Permission denied!',
-                'Vision Camera does not have permission to save the media to your camera roll.',
-            );
-            return;
-        }
-        try {
-            // const snapshot = await camera.current.takeSnapshot({
-            //   quality: 85,
-            //   skipMetadata: true,
-            // });
-            // console.log(snapshot);
-            const photo = await camera.current.takePhoto({
-                flash: 'on',
-            });
-
-            await CameraRoll.save(`file://${photo.path}`, {
-                type: 'photo',
-            });
-            console.log(photo);
-        } catch (e) {
-            console.log(e);
-        }
+        const photo = await camera.current.takePhoto({
+        });
+        await CameraRoll.save(`file://${photo.path}`, {
+            type: 'photo',
+        });
+        console.log(photo);
+        pushNotif(photo.path);
     };
-
 
     if (device == null) return <NoCameraFound />;
 
@@ -74,12 +54,20 @@ const CameraScreen = () => {
                 device={device}
                 preset="medium"
                 photo={true}
+                isActive={true}
+
             />
-            <Button
-                title="Take Picture"
-                style={styles.captureButton}
-                onPress={onTakePicture}
-            />
+
+
+            <TouchableOpacity
+
+                onPress={onTakePicture}>
+                <Image
+                    style={styles.captureButton}
+                    source={require('./camera1.png')}
+                    resizeMode='contain'
+                />
+            </TouchableOpacity>
         </View>
     );
 };
@@ -97,5 +85,7 @@ const styles = StyleSheet.create(
         captureButton: {
             alignSelf: 'center',
             margin: 20,
+            height: 80,
+            width: 80,
         },
     });
