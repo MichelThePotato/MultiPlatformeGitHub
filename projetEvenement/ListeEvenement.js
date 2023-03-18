@@ -9,6 +9,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 
 import { Camera } from 'react-native-vision-camera';
+import Evenement from './Evenement';
 
 
 
@@ -42,8 +43,9 @@ const ListeEvenement = () => {
                 console.log('storedTodoItems');
                 console.log(storedTodoItems);
             } else {
-
-
+                // await savestoreItem(db, data.nom, data.addresse, data.descr, data.debut, data.fin);
+                console.log('data');
+                console.log(data);
                 //setData(data);
             }
         } catch (error) {
@@ -106,7 +108,7 @@ const ListeEvenement = () => {
             <View>
                 <ScrollView>
                     {data.map(evenement => (
-                        <Lieu key={evenement.id} evenement={evenement} />
+                        <Evenement key={evenement.id} evenement={evenement} />
                     ))}
                 </ScrollView>
             </View>

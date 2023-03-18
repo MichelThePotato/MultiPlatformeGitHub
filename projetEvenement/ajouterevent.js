@@ -1,7 +1,7 @@
-import { StyleSheet, Text, View,ScrollView,TextInput,Button } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, TextInput, Button } from 'react-native'
 import React from 'react'
 
-import { savestoreItem } from './db-services';
+import { savestoreItem, getDBConnection } from './db-services';
 import { useNavigation } from '@react-navigation/native';
 
 
@@ -12,6 +12,7 @@ const Ajouterevent = () => {
     const [addresse, setAddresse] = React.useState("");
     const [debut, setDebut] = React.useState("");
     const [fin, setFin] = React.useState("");
+
     const onTextChangeNom = text => {
         setNom(text);
     };
@@ -28,7 +29,7 @@ const Ajouterevent = () => {
     const onTextChangeFin = text => {
         setFin(text);
     };
-    
+
     return (
         <View style={styles.container}>
             <TextInput
@@ -46,12 +47,12 @@ const Ajouterevent = () => {
                 onChangeText={onTextChangeAddresse}
                 defaultValue={addresse}
                 placeholder="Addresse"></TextInput>
-                 <TextInput
+            <TextInput
                 style={styles.inputs}
                 onChangeText={onTextChangeDebut}
                 defaultValue={debut}
                 placeholder="Debut"></TextInput>
-                     <TextInput
+            <TextInput
                 style={styles.inputs}
                 onChangeText={onTextChangeFin}
                 defaultValue={fin}
@@ -60,10 +61,12 @@ const Ajouterevent = () => {
                 <Button
                     title={'Ajouter Evenement'}
                     onPress={async () => {
-                        await savestoreItem(nom,addresse,descr,debut,fin);
+                        const db = await getDBConnection();
+
+                        await savestoreItem(db, nom, addresse, descr, debut, fin);
                         navigation.navigate('ListeEvenementInterface');
                     }}
-                    disabled={!nom || !descr||!addresse||!debut||!fin}></Button>
+                    disabled={!nom || !descr || !addresse || !debut || !fin}></Button>
             </View>
         </View>);
 }

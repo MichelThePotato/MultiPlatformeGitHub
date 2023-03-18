@@ -1,0 +1,67 @@
+import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native'
+import React, { useContext, useEffect, useState } from 'react'
+
+import { LieuxContext } from './LieuContext'
+import { useNavigation } from '@react-navigation/native';
+import { deleteTodoItem, getDBConnection } from './db-services';
+
+const Evenement = ({ evenement }) => {
+
+    const navigation = useNavigation();
+
+    const deleteItem = async (id) => {
+        try {
+            const db = await getDBConnection();
+            await deleteTodoItem(db, id);
+            todos.splice(id, 1);
+            setTodos(todos.slice(0));
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    return (
+        <View>
+
+            <View style={{ padding: 10 }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <Text style={styles.item}> {evenement.nom} </Text>
+                    <TouchableOpacity
+                        onPress={() => {
+                            navigation.push('DetailEvent', { name: evenement.nom + " " + evenement.descr })
+                        }}>
+                        <Text>detail</Text>
+
+                    </TouchableOpacity>
+                </View>
+                <TouchableOpacity
+                    onPress={() => {
+                        deleteItem();
+                    }}>
+                    <Text>{evenement.id}</Text>
+
+                </TouchableOpacity>
+                <Text style={styles.ligne}> </Text>
+            </View>
+        </View >
+    )
+}
+
+export default Evenement
+
+const styles = StyleSheet.create({
+
+    item: {
+        fontSize: 15,
+        fontWeight: 'bold'
+
+    },
+
+    ligne: {
+        borderBottomColor: 'black',
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        paddingHorizontal: 5,
+
+    }
+
+
+})

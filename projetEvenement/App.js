@@ -11,6 +11,7 @@ import PermissionScreen from './PermissionScreen';
 import { useCameraDevices, Camera } from 'react-native-vision-camera';
 import Ajouterevent from './ajouterevent';
 import ListeEvenement from './ListeEvenement';
+import DetailEvent from './DetailEvent';
 
 
 
@@ -70,6 +71,11 @@ const App = () => {
         <Stack.Screen name='PermissionScreen' component={PermissionScreen}>
         </Stack.Screen>
         <Stack.Screen name='Ajouterevent' component={Ajouterevent} />
+        <Stack.Screen name='DetailEvent' component={DetailEvent}
+          options={({ route }) => ({ title: route.params.name })}>
+        </Stack.Screen>
+
+
 
       </Stack.Navigator>
     </NavigationContainer >
