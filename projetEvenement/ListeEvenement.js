@@ -43,7 +43,7 @@ const ListeEvenement = () => {
                 console.log('storedTodoItems');
                 console.log(storedTodoItems);
             } else {
-                // await savestoreItem(db, data.nom, data.addresse, data.descr, data.debut, data.fin);
+                await savestoreItem(db, data);
                 console.log('data');
                 console.log(data);
                 //setData(data);

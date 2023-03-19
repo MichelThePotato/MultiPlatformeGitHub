@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, ScrollView, TextInput, Button } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 
 import { savestoreItem, getDBConnection } from './db-services';
 import { useNavigation } from '@react-navigation/native';
@@ -12,6 +12,7 @@ const Ajouterevent = () => {
     const [addresse, setAddresse] = React.useState("");
     const [debut, setDebut] = React.useState("");
     const [fin, setFin] = React.useState("");
+    const [newTodo, setNewTodo] = useState('');
 
     const onTextChangeNom = text => {
         setNom(text);
@@ -29,7 +30,24 @@ const Ajouterevent = () => {
     const onTextChangeFin = text => {
         setFin(text);
     };
-
+    const addTodo = async () => {
+        if (!newTodo.trim()) return;
+        try {
+            const newTodos = [...todos, {
+                id: todos.reduce((acc, cur) => {
+                    if (cur.id > acc.id) return cur;
+                    return acc;
+                }).id + 1, value: newTodo
+            }];
+            setTodos(newTodos);
+            const db = await getDBConnection();
+            // await saveTodoItems(db, newTodos);
+            await saveTodoItems(db, nom, addresse, descr, debut, fin);
+            setNewTodo('');
+        } catch (error) {
+            console.error(error);
+        }
+    };
     return (
         <View style={styles.container}>
             <TextInput
@@ -62,8 +80,8 @@ const Ajouterevent = () => {
                     title={'Ajouter Evenement'}
                     onPress={async () => {
                         const db = await getDBConnection();
-
                         await savestoreItem(db, nom, addresse, descr, debut, fin);
+                        // addTodo();
                         navigation.navigate('ListeEvenementInterface');
                     }}
                     disabled={!nom || !descr || !addresse || !debut || !fin}></Button>

@@ -8,7 +8,7 @@ import { deleteTodoItem, getDBConnection } from './db-services';
 const Evenement = ({ evenement }) => {
 
     const navigation = useNavigation();
-
+    const [todos, setTodos] = useState([]);
     const deleteItem = async (id) => {
         try {
             const db = await getDBConnection();
@@ -35,7 +35,7 @@ const Evenement = ({ evenement }) => {
                 </View>
                 <TouchableOpacity
                     onPress={() => {
-                        deleteItem();
+                        deleteItem(evenement.id);
                     }}>
                     <Text>{evenement.id}</Text>
 
