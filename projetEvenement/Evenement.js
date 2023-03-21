@@ -4,15 +4,19 @@ import React, { useContext, useEffect, useState } from 'react'
 import { LieuxContext } from './LieuContext'
 import { useNavigation } from '@react-navigation/native';
 import { deleteTodoItem, getDBConnection } from './db-services';
+import { EvenementsContext, EvenementsDispatchContext } from './Context';
 
 const Evenement = ({ evenement }) => {
 
     const navigation = useNavigation();
-
+    const dispatch = useContext(EvenementsDispatchContext)
+    const evenements = useContext(EvenementsContext);
     const deleteItem = async (id) => {
         try {
             const db = await getDBConnection();
             await deleteTodoItem(db, id);
+            dispatch({ type: "deleted", id: id })
+
 
         } catch (error) {
             console.error(error);
@@ -34,6 +38,7 @@ const Evenement = ({ evenement }) => {
                 </View>
                 <TouchableOpacity
                     onPress={() => {
+
                         deleteItem(evenement.id);
                     }}>
                     <Text>{evenement.id}</Text>
