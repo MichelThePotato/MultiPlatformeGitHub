@@ -3,7 +3,7 @@ import React,{useContext} from 'react'
 
 import { savestoreItem, getDBConnection } from './db-services';
 import { useNavigation } from '@react-navigation/native';
-import { storeTache } from './Storage';
+import { store } from './Storage';
 import { EvenementsDispatchContext } from './Context';
 
 
@@ -75,16 +75,17 @@ const Ajouterevent = () => {
                                 fin:fin,
                 
                             };
-                
-                            let id = await storeTache(newTache);
-                            newTache.id = id;
-                            
+                            console.log("passe store Tache")
+
+                            let id = await savestoreItem(db, nom, addresse, descr, debut, fin);
+                            newTache.id = Object.values(id[0].rows.item(0))[0];
+                            console.log(newTache.id)
+
                             dispatch({
-                                type: 'added',
+                                type: 'added', 
                                 evenement: newTache,
                             });
                             console.log("passe dispatch")
-                        await savestoreItem(db, nom, addresse, descr, debut, fin);
                         navigation.navigate('ListeEvenementInterface');}
                     }
                     disabled={!nom || !descr || !addresse || !debut || !fin}></Button>

@@ -46,12 +46,16 @@ export const getstoreItems = async db => {
 };
 
 export const savestoreItem = async (db, nom, addresse, descr, debut, fin) => {
-  const insertQuery =
+  let insertQuery =
     // `INSERT OR REPLACE INTO ${tableName}(id,nom,addresse,descr,debut,fin) values` +
     // storeItems.map(i => `(${i.id}, '${i.addresse}', '${i.descr}', '${i.debut}', '${i.fin}')`).join(',');
     `INSERT INTO ${tableName}(nom,addresse,descr,debut,fin) VALUES` +
     `(?,?,?,?,?)`;
-  return db.executeSql(insertQuery, [nom, addresse, descr, debut, fin]);
+    await db.executeSql(insertQuery, [nom, addresse, descr, debut, fin]);
+      insertQuery =
+     
+      `SELECT last_insert_rowid() FROM ${tableName}`;
+      return await db.executeSql(insertQuery);
 };
 
 export const deleteTodoItem = async (db, id) => {

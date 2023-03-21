@@ -1,56 +1,35 @@
 import { PermissionsAndroid, StyleSheet, Text, View, ScrollView, DrawerLayoutAndroid, Button, TouchableOpacity, Image } from 'react-native'
-import React, { useState, useEffect, useCallback, useRef } from 'react'
+import React, { useState, useEffect, useCallback, useRef,useContext } from 'react'
 import {
     createTable,
     getDBConnection,
     getstoreItems,
     savestoreItem,
+    
 } from './db-services';
 import { useNavigation } from '@react-navigation/native';
 
 import { Camera } from 'react-native-vision-camera';
 import Evenement from './Evenement';
+import { EvenementsContext } from './Context';
 
 
 
 const ListeEvenement = () => {
-    const [data, setData] = useState([]);
+   
     const drawer = useRef(null);
     const [cameraPermissionStatus, setCameraPermissionStatus] =
         useState('not-determined');
     const navigation = useNavigation();
+    const evenements = useContext(EvenementsContext);
 
     useEffect(() => {
-        loadDataCallback();
-    }, [loadDataCallback]);
-
-    const loadDataCallback = useCallback(async () => {
-        try {
-            // const initTodos = [{ id: 0, value: 'go to shop' }, { id: 1, value: 'eat at least a one healthy foods' }, { id: 2, value: 'Do some exercises' }];
+        async function fetchFromStorage() {
             const db = await getDBConnection();
-
-            // // test pour savoir j'utilise la db sqlite et non le fetch
-            // //const db = await getDBConnection();
-            // const tableName = 'storeDataV19';
-            // insertQuery = `INSERT OR REPLACE INTO ${tableName}(address,banner,city,lastVisit,latitude,longitude) values ( 'test address', 'test banner', 'test city', 'test lastVisit', 'test latitude', 'test longitude')`;
-            // db.executeSql(insertQuery)
-
-            await createTable(db);
-            const storedTodoItems = await getstoreItems(db);
-
-            if (storedTodoItems.length) {
-                setData(storedTodoItems);
-                console.log('storedTodoItems');
-                console.log(storedTodoItems);
-            } else {
-                // await savestoreItem(db, data.nom, data.addresse, data.descr, data.debut, data.fin);
-                console.log('data');
-                console.log(data);
-                //setData(data);
-            }
-        } catch (error) {
-            console.error(error);
-        }
+            const EvenementTask = await getstoreItems(db);
+            console.log(EvenementTask)
+            dispatch({ type: 'init', evenements: EvenementTask });}
+            fetchFromStorage();
     }, []);
 
 
@@ -107,7 +86,7 @@ const ListeEvenement = () => {
             renderNavigationView={navigationView}>
             <View>
                 <ScrollView>
-                    {data.map(evenement => (
+                    {evenements.map(evenement => (
                         <Evenement key={evenement.id} evenement={evenement} />
                     ))}
                 </ScrollView>
