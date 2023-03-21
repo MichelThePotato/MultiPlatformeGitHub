@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState ,useRoute} from 'react'
 
 import { LieuxContext } from './LieuContext'
 import { useNavigation } from '@react-navigation/native';
@@ -22,6 +22,7 @@ const Evenement = ({ evenement }) => {
             console.error(error);
         }
     };
+
     return (
         <View>
 
@@ -33,8 +34,16 @@ const Evenement = ({ evenement }) => {
                             navigation.push('DetailEvent', { name: evenement.nom + " " + evenement.descr })
                         }}>
                         <Text>detail</Text>
+                    
 
                     </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => {
+                            navigation.navigate('Modifierevent', {evenement })
+                        }}>
+                        <Text>modifier</Text>
+                        </TouchableOpacity>
+
                 </View>
                 <TouchableOpacity
                     onPress={() => {

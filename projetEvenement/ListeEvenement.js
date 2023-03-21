@@ -11,7 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { Camera } from 'react-native-vision-camera';
 import Evenement from './Evenement';
-import { EvenementsContext } from './Context';
+import { EvenementsContext, EvenementsDispatchContext } from './Context';
 
 
 
@@ -22,6 +22,8 @@ const ListeEvenement = () => {
         useState('not-determined');
     const navigation = useNavigation();
     const evenements = useContext(EvenementsContext);
+    const dispatch = useContext(EvenementsDispatchContext);
+
 
     useEffect(() => {
         async function fetchFromStorage() {
@@ -77,7 +79,7 @@ const ListeEvenement = () => {
             </TouchableOpacity>
         </View>
     );
-
+console.log("Liste Evenement")
     return (
         <DrawerLayoutAndroid
             ref={drawer}

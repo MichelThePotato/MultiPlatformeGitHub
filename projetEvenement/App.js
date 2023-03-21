@@ -15,6 +15,7 @@ import DetailEvent from './DetailEvent';
 import { EvenementReducer } from './EvenementReducer';
 import { getstoreItems, getDBConnection } from './db-services';
 import { EvenementsContext, EvenementsDispatchContext } from './Context';
+import Modifierevent from './Modifierevent';
 
 
 
@@ -89,6 +90,8 @@ const App = () => {
         <Stack.Screen name='PermissionScreen' component={PermissionScreen}>
         </Stack.Screen>
         <Stack.Screen name='Ajouterevent' component={Ajouterevent} />
+        <Stack.Screen name='Modifierevent' component={Modifierevent}></Stack.Screen> 
+
         <Stack.Screen name='DetailEvent' component={DetailEvent}
           options={({ route }) => ({ title: route.params.name })}>
         </Stack.Screen>
