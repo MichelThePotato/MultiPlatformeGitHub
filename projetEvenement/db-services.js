@@ -49,8 +49,8 @@ export const savestoreItem = async (db, nom, addresse, descr, debut, fin) => {
   const insertQuery =
     // `INSERT OR REPLACE INTO ${tableName}(id,nom,addresse,descr,debut,fin) values` +
     // storeItems.map(i => `(${i.id}, '${i.addresse}', '${i.descr}', '${i.debut}', '${i.fin}')`).join(',');
-    `INSERT INTO ${tableName}(id,nom,addresse,descr,debut,fin) VALUES` +
-    `(0,?,?,?,?,?)`;
+    `INSERT INTO ${tableName}(nom,addresse,descr,debut,fin) VALUES` +
+    `(?,?,?,?,?)`;
   return db.executeSql(insertQuery, [nom, addresse, descr, debut, fin]);
 };
 

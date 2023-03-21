@@ -13,8 +13,7 @@ const Evenement = ({ evenement }) => {
         try {
             const db = await getDBConnection();
             await deleteTodoItem(db, id);
-            todos.splice(id, 1);
-            setTodos(todos.slice(0));
+
         } catch (error) {
             console.error(error);
         }
@@ -35,7 +34,7 @@ const Evenement = ({ evenement }) => {
                 </View>
                 <TouchableOpacity
                     onPress={() => {
-                        deleteItem();
+                        deleteItem(evenement.id);
                     }}>
                     <Text>{evenement.id}</Text>
 

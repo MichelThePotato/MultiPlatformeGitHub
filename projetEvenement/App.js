@@ -1,5 +1,5 @@
 import { Settings, StyleSheet, Text, View, Image, TouchableOpacity, PermissionsAndroid } from 'react-native'
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useReducer,useContext } from 'react'
 import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './Login';
@@ -12,6 +12,11 @@ import { useCameraDevices, Camera } from 'react-native-vision-camera';
 import Ajouterevent from './ajouterevent';
 import ListeEvenement from './ListeEvenement';
 import DetailEvent from './DetailEvent';
+import { EvenementReducer } from './EvenementReducer';
+import { getstoreItems, getDBConnection } from './db-services';
+import { EvenementsContext, EvenementsDispatchContext } from './Context';
+
+
 
 
 
@@ -19,9 +24,20 @@ const App = () => {
   const Stack = createNativeStackNavigator();
   const navigationRef = useNavigationContainerRef();
   const [cameraPermission, setCameraPermission] = useState();
+  const [evenements, dispatch] = useReducer(EvenementReducer, []);
+
 
   useEffect(() => {
     Camera.getCameraPermissionStatus().then(setCameraPermission);
+
+    async function fetchFromStorage() {
+      const db = await getDBConnection();
+      const EvenementTask = await getstoreItems(db);
+      console.log(EvenementTask)
+      dispatch({ type: 'init', evenements: EvenementTask });
+    }
+
+    fetchFromStorage();
   }, []);
 
   console.log(`Re-rendering Navigator. Camera: ${cameraPermission}`);
@@ -31,10 +47,12 @@ const App = () => {
   }
 
   const showPermissionsPage = cameraPermission !== 'authorized';
-
+  const value = 
   console.log(showPermissionsPage);
   return (
     <NavigationContainer ref={navigationRef}>
+       <EvenementsContext.Provider value={evenements}>
+        <EvenementsDispatchContext.Provider value={dispatch}>
       <Stack.Navigator>
         <Stack.Screen name='Login' component={Login} options={{
 
@@ -78,6 +96,9 @@ const App = () => {
 
 
       </Stack.Navigator>
+      </EvenementsDispatchContext.Provider>
+      </EvenementsContext.Provider>
+
     </NavigationContainer >
   )
 }

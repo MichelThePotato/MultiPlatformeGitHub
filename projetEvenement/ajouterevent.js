@@ -1,8 +1,10 @@
 import { StyleSheet, Text, View, ScrollView, TextInput, Button } from 'react-native'
-import React from 'react'
+import React,{useContext} from 'react'
 
 import { savestoreItem, getDBConnection } from './db-services';
 import { useNavigation } from '@react-navigation/native';
+import { storeTache } from './Storage';
+import { EvenementsDispatchContext } from './Context';
 
 
 const Ajouterevent = () => {
@@ -12,6 +14,8 @@ const Ajouterevent = () => {
     const [addresse, setAddresse] = React.useState("");
     const [debut, setDebut] = React.useState("");
     const [fin, setFin] = React.useState("");
+    const dispatch = useContext(EvenementsDispatchContext);
+
 
     const onTextChangeNom = text => {
         setNom(text);
@@ -62,10 +66,27 @@ const Ajouterevent = () => {
                     title={'Ajouter Evenement'}
                     onPress={async () => {
                         const db = await getDBConnection();
-
+                       
+                            let newTache = {
+                                id: 1,
+                                nom: nom,
+                                descr: descr,
+                                debut:debut,
+                                fin:fin,
+                
+                            };
+                
+                            let id = await storeTache(newTache);
+                            newTache.id = id;
+                            
+                            dispatch({
+                                type: 'added',
+                                evenement: newTache,
+                            });
+                            console.log("passe dispatch")
                         await savestoreItem(db, nom, addresse, descr, debut, fin);
-                        navigation.navigate('ListeEvenementInterface');
-                    }}
+                        navigation.navigate('ListeEvenementInterface');}
+                    }
                     disabled={!nom || !descr || !addresse || !debut || !fin}></Button>
             </View>
         </View>);
