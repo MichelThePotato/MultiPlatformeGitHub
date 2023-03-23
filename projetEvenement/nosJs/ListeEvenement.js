@@ -69,7 +69,7 @@ const ListeEvenement = () => {
         <View style={{flexDirection: 'row'}}>
           <Image
             style={styles.bordure}
-            source={require('./setting2.png')}
+            source={require('../photos/setting2.png')}
             resizeMode="contain"
           />
           <Text>Preference</Text>
@@ -78,7 +78,7 @@ const ListeEvenement = () => {
       <TouchableOpacity onPress={requestCameraPermission}>
         <Image
           style={styles.bordure}
-          source={require('./camera1.png')}
+          source={require('../photos/camera1.png')}
           resizeMode="contain"
         />
       </TouchableOpacity>

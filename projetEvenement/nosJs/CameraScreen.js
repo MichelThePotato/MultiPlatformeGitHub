@@ -66,7 +66,7 @@ const CameraScreen = () => {
       <TouchableOpacity onPress={onTakePicture}>
         <Image
           style={styles.captureButton}
-          source={require('./camera1.png')}
+          source={require('../photos/camera1.png')}
           resizeMode="contain"
         />
       </TouchableOpacity>

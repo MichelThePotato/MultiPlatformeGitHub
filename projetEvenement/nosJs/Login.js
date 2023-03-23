@@ -33,7 +33,7 @@ const Login = ({navigation}) => {
     <View style={styles.main_contain}>
       <Image
         style={styles.logo}
-        source={require('./Shin_chan_dumpling.jpg')}></Image>
+        source={require('../photos/Shin_chan_dumpling.jpg')}></Image>
 
       <View style={styles.placeholderContainer}>
         <TextInput

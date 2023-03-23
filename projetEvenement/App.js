@@ -74,7 +74,7 @@ const App = () => {
                   // App Logo
                   <Image
                     style={{height: 30, width: 30}}
-                    source={require('./Shin_chan_dumpling.jpg')}
+                    source={require('./photos/Shin_chan_dumpling.jpg')}
                     resizeMode="contain"
                   />
                 ),
@@ -85,7 +85,7 @@ const App = () => {
                     }}>
                     <Image
                       style={{height: 30, width: 30}}
-                      source={require('./setting2.png')}
+                      source={require('./photos/setting2.png')}
                       resizeMode="contain"
                     />
                   </TouchableOpacity>
