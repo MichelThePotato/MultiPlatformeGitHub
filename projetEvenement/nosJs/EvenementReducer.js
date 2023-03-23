@@ -12,6 +12,7 @@ export function EvenementReducer(evenements, action) {
           id: action.evenement.id,
           nom: action.evenement.nom,
           descr: action.evenement.descr,
+          addresse: action.evenement.addresse,
           debut: action.evenement.debut,
           fin: action.evenement.fin,
         },

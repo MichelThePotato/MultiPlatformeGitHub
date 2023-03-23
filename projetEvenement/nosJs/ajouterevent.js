@@ -91,13 +91,14 @@ const Ajouterevent = () => {
                             id: 1,
                             nom: nom,
                             descr: descr,
+                            address:addresse,
                             debut: debut,
                             fin: fin,
 
                         };
                         console.log("passe store Tache")
 
-                        let id = await savestoreItem(db, nom, addresse, descr, datedebut.toDateString(), datefin.toDateString());
+                        let id = await savestoreItem(db, nom, addresse, descr, datedebut.toISOString(), datefin.toISOString());
                         newTache.id = Object.values(id[0].rows.item(0))[0];
                         console.log(newTache.id)
 

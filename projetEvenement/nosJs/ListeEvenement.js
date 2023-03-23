@@ -85,7 +85,7 @@ const ListeEvenement = () => {
       </TouchableOpacity>
     </View>
   );
-  console.log('Liste Evenement');
+  console.log(evenements);
   return (
     <DrawerLayoutAndroid
       ref={drawer}
