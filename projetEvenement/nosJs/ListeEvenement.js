@@ -39,6 +39,7 @@ const ListeEvenement = () => {
   useEffect(() => {
     async function fetchFromStorage() {
       const db = await getDBConnection();
+      await createTable(db);
       const EvenementTask = await getstoreItems(db);
       console.log(EvenementTask);
       dispatch({type: 'init', evenements: EvenementTask});

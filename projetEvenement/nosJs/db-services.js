@@ -4,7 +4,7 @@ import {
   SQLiteDatabase,
 } from 'react-native-sqlite-storage';
 
-const tableName = 'storeDataV2'; //10 good //16
+const tableName = 'storeDataVV2'; //10 good //16
 enablePromise(true);
 
 export const getDBConnection = async () => {

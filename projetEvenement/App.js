@@ -28,7 +28,7 @@ import ListeEvenement from './nosJs/ListeEvenement';
 import DetailEvent from './nosJs/DetailEvent';
 import Ajouterevent from './nosJs/ajouterevent';
 import {EvenementReducer} from './nosJs/EvenementReducer';
-import {getstoreItems, getDBConnection} from './nosJs/db-services';
+import {getstoreItems, getDBConnection,createTable} from './nosJs/db-services';
 import {EvenementsContext, EvenementsDispatchContext} from './nosJs/Context';
 import ListeEvenementInterface from './nosJs/ListeEvenementInterface';
 import CameraScreen from './nosJs/CameraScreen';
@@ -45,6 +45,7 @@ const App = () => {
 
     async function fetchFromStorage() {
       const db = await getDBConnection();
+      await createTable(db);
       const EvenementTask = await getstoreItems(db);
       console.log(EvenementTask);
       dispatch({type: 'init', evenements: EvenementTask});
