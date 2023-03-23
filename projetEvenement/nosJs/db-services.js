@@ -4,12 +4,11 @@ import {
   SQLiteDatabase,
 } from 'react-native-sqlite-storage';
 
-
-const tableName = 'storeDataV2';//10 good //16
+const tableName = 'storeDataV2'; //10 good //16
 enablePromise(true);
 
 export const getDBConnection = async () => {
-  return openDatabase({ name: 'store.db', location: 'default' });
+  return openDatabase({name: 'store.db', location: 'default'});
 };
 
 export const createTable = async db => {
@@ -51,11 +50,9 @@ export const savestoreItem = async (db, nom, addresse, descr, debut, fin) => {
     // storeItems.map(i => `(${i.id}, '${i.addresse}', '${i.descr}', '${i.debut}', '${i.fin}')`).join(',');
     `INSERT INTO ${tableName}(nom,addresse,descr,debut,fin) VALUES` +
     `(?,?,?,?,?)`;
-    await db.executeSql(insertQuery, [nom, addresse, descr, debut, fin]);
-      insertQuery =
-     
-      `SELECT last_insert_rowid() FROM ${tableName}`;
-      return await db.executeSql(insertQuery);
+  await db.executeSql(insertQuery, [nom, addresse, descr, debut, fin]);
+  insertQuery = `SELECT last_insert_rowid() FROM ${tableName}`;
+  return await db.executeSql(insertQuery);
 };
 
 export const deleteTodoItem = async (db, id) => {
@@ -63,14 +60,26 @@ export const deleteTodoItem = async (db, id) => {
   await db.executeSql(deleteQuery);
 };
 
-
-export const updatestoreItem = async (db,id, nom, addresse, descr, debut, fin) => {
-  console.log("allo:"+nom)
+export const updatestoreItem = async (
+  db,
+  id,
+  nom,
+  addresse,
+  descr,
+  debut,
+  fin,
+) => {
+  console.log('allo:' + nom);
   const insertQuery =
     // `INSERT OR REPLACE INTO ${tableName}(id,nom,addresse,descr,debut,fin) values` +
     // storeItems.map(i => `(${i.id}, '${i.addresse}', '${i.descr}', '${i.debut}', '${i.fin}')`).join(',');
     `UPDATE ${tableName} SET nom=?,addresse=?,descr=?,debut=?,fin=? WHERE id = ?`;
-    return await db.executeSql(insertQuery, [nom, addresse, descr, debut, fin,id]);
-
-     
+  return await db.executeSql(insertQuery, [
+    nom,
+    addresse,
+    descr,
+    debut,
+    fin,
+    id,
+  ]);
 };

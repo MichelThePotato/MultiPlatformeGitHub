@@ -1,4 +1,3 @@
-
 import EncryptedStorage from 'react-native-encrypted-storage';
 
 export const storeUser = async user => {
@@ -23,9 +22,9 @@ export const storeUser = async user => {
     const jsonValue = JSON.stringify(users);
     await EncryptedStorage.setItem('@storage_Key_User', jsonValue);
     console.log(nextId);
-    console.log(jsonValue + "dans storeUser");
+    console.log(jsonValue + 'dans storeUser');
     // console.log(value+ "dans storeUser"); avant la nouvelle valeur
-    return nextId; 
+    return nextId;
   } catch (e) {
     // saving error
   }
@@ -51,7 +50,7 @@ export const getUser = async () => {
 //       // value previously stored
 //       return [];
 //     }
-    
+
 //     return JSON.parse(value);
 //   } catch (e) {
 //     // error reading value
@@ -117,7 +116,7 @@ export const storeLogin = async login => {
     const jsonValue = JSON.stringify(users);
     await EncryptedStorage.setItem('@storage_Key_status', jsonValue);
     console.log(nextId);
-    console.log(users+"////////////////");
+    console.log(users + '////////////////');
     return nextId;
   } catch (e) {
     // saving error

@@ -1,6 +1,6 @@
 import {StyleSheet, Text, View, TextInput, Button} from 'react-native';
 import React from 'react';
-import { storeUser,getUser } from './Storage';
+import {storeUser, getUser} from './Storage';
 import {useNavigation} from '@react-navigation/native';
 
 const Signuppage = ({navigation}) => {
