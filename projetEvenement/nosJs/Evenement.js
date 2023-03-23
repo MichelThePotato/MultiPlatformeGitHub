@@ -27,8 +27,10 @@ const Evenement = ({evenement}) => {
           <Text style={styles.item}> {evenement.nom} </Text>
           <TouchableOpacity
             onPress={() => {
+              
               navigation.push('DetailEvent', {
-                name: evenement.nom + ' ' + evenement.descr,
+                name: evenement.nom,
+                unEvenement: evenement,
               });
             }}>
             <Text>detail</Text>

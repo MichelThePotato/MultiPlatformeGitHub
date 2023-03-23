@@ -41,7 +41,7 @@ const ListeEvenement = () => {
       const db = await getDBConnection();
       await createTable(db);
       const EvenementTask = await getstoreItems(db);
-      console.log(EvenementTask);
+      //console.log(EvenementTask);
       dispatch({type: 'init', evenements: EvenementTask});
     }
     fetchFromStorage();
@@ -85,7 +85,7 @@ const ListeEvenement = () => {
       </TouchableOpacity>
     </View>
   );
-  console.log(evenements);
+  //console.log(evenements);
   return (
     <DrawerLayoutAndroid
       ref={drawer}

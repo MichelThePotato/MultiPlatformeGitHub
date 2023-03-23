@@ -36,21 +36,31 @@ const Ajouterevent = () => {
   
     return (
         <View style={styles.container}>
+            <View style={styles.inputView}>
+            <Text style={styles.title}>Nom: </Text>
             <TextInput
                 style={styles.inputs}
                 onChangeText={onTextChangeNom}
                 defaultValue={nom}
                 placeholder="nom"></TextInput>
+            </View>
+            <View style={styles.inputView}>
+            <Text style={styles.title}>Description: </Text>
             <TextInput
                 style={styles.inputs}
                 onChangeText={onTextChangeDescr}
                 defaultValue={descr}
                 placeholder="Description"></TextInput>
+            </View>
+            <View style={styles.inputView}>
+            <Text style={styles.title}>Addresse: </Text>
             <TextInput
                 style={styles.inputs}
                 onChangeText={onTextChangeAddresse}
                 defaultValue={addresse}
                 placeholder="Addresse"></TextInput>
+            </View>
+        <View style={styles.datePickerView}>
             <Button title="Date Debut" onPress={() => setOpendebut(true)} />
             <DatePicker
                 modal
@@ -64,6 +74,9 @@ const Ajouterevent = () => {
                     setOpendebut(false)
                 }}
             />
+            <Text>{datedebut.toLocaleDateString() + " " + datedebut.toLocaleTimeString()}</Text>
+        </View>
+        <View style={styles.datePickerView}>
             <Button title="Date Fin" onPress={() => setOpenfin(true)} />
             <DatePicker
                 modal
@@ -78,9 +91,8 @@ const Ajouterevent = () => {
                     setOpenfin(false)
                 }}
             />
-
-
-
+            <Text>{datefin.toLocaleDateString() + " " + datefin.toLocaleTimeString()}</Text>
+        </View>
             <View style={{ width: '70%', alignSelf: 'center' }}>
                 <Button
                     title={'Ajouter Evenement'}
@@ -98,7 +110,9 @@ const Ajouterevent = () => {
                         };
                         console.log("passe store Tache")
 
-                        let id = await savestoreItem(db, nom, addresse, descr, datedebut.toISOString(), datefin.toISOString());
+                        let id = await savestoreItem(db, nom, addresse, descr, 
+                            datedebut.toLocaleDateString() + " " + datedebut.toLocaleTimeString(), 
+                            datefin.toLocaleDateString() + " " + datefin.toLocaleTimeString());
                         newTache.id = Object.values(id[0].rows.item(0))[0];
                         console.log(newTache.id)
 
@@ -117,4 +131,23 @@ const Ajouterevent = () => {
 
 export default Ajouterevent
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignContent: 'center',
+        gap: 10,
+        paddingTop: 20,
+      },
+    inputView: {
+        flexDirection: 'column',
+        alignItems: 'flex-start'
+    },
+    datePickerView: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
+})

@@ -47,7 +47,7 @@ const App = () => {
       const db = await getDBConnection();
       await createTable(db);
       const EvenementTask = await getstoreItems(db);
-      console.log(EvenementTask);
+      //console.log(EvenementTask);
       dispatch({type: 'init', evenements: EvenementTask});
     }
 
@@ -61,7 +61,7 @@ const App = () => {
   }
 
   const showPermissionsPage = cameraPermission !== 'authorized';
-  const value = console.log(showPermissionsPage);
+  //const value = console.log(showPermissionsPage);
   return (
     <NavigationContainer ref={navigationRef}>
       <EvenementsContext.Provider value={evenements}>
