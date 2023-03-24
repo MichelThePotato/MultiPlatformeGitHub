@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, TextInput, Button } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, TextInput, Button, TouchableOpacity } from 'react-native'
 import React, { useContext } from 'react'
 
 import { savestoreItem, getDBConnection } from './db-services';
@@ -33,98 +33,113 @@ const Ajouterevent = () => {
     const onTextChangeAddresse = text => {
         setAddresse(text);
     };
-  
+
+
+    const ajouterUnEvent = async () => {
+        const db = await getDBConnection();
+
+        let newTache = {
+            id: 1,
+            nom: nom,
+            descr: descr,
+            address: addresse,
+            debut: debut,
+            fin: fin,
+
+        };
+        console.log("passe store Tache")
+
+        let id = await savestoreItem(db, nom, addresse, descr,
+            datedebut.toLocaleDateString() + " " + datedebut.toLocaleTimeString(),
+            datefin.toLocaleDateString() + " " + datefin.toLocaleTimeString());
+        newTache.id = Object.values(id[0].rows.item(0))[0];
+        console.log(newTache.id)
+
+        dispatch({
+            type: 'added',
+            evenement: newTache,
+        });
+        console.log("passe dispatch")
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.inputView}>
-            <Text style={styles.title}>Nom: </Text>
-            <TextInput
-                style={styles.inputs}
-                onChangeText={onTextChangeNom}
-                defaultValue={nom}
-                placeholder="nom"></TextInput>
+                <Text style={styles.title}>Nom: </Text>
+                <TextInput
+                    style={styles.inputs}
+                    onChangeText={onTextChangeNom}
+                    defaultValue={nom}
+                    placeholder="nom"></TextInput>
             </View>
             <View style={styles.inputView}>
-            <Text style={styles.title}>Description: </Text>
-            <TextInput
-                style={styles.inputs}
-                onChangeText={onTextChangeDescr}
-                defaultValue={descr}
-                placeholder="Description"></TextInput>
+                <Text style={styles.title}>Description: </Text>
+                <TextInput
+                    style={styles.inputs}
+                    onChangeText={onTextChangeDescr}
+                    defaultValue={descr}
+                    placeholder="Description"></TextInput>
             </View>
             <View style={styles.inputView}>
-            <Text style={styles.title}>Addresse: </Text>
-            <TextInput
-                style={styles.inputs}
-                onChangeText={onTextChangeAddresse}
-                defaultValue={addresse}
-                placeholder="Addresse"></TextInput>
+                <Text style={styles.title}>Addresse: </Text>
+                <TextInput
+                    style={styles.inputs}
+                    onChangeText={onTextChangeAddresse}
+                    defaultValue={addresse}
+                    placeholder="Addresse"></TextInput>
             </View>
-        <View style={styles.datePickerView}>
-            <Button title="Date Debut" onPress={() => setOpendebut(true)} />
-            <DatePicker
-                modal
-                open={opendebut}
-                date={datedebut}
-                onConfirm={(datedebut) => {
-                    setOpendebut(false)
-                    setDatedebut(datedebut)
-                }}
-                onCancel={() => {
-                    setOpendebut(false)
-                }}
-            />
-            <Text>{datedebut.toLocaleDateString() + " " + datedebut.toLocaleTimeString()}</Text>
-        </View>
-        <View style={styles.datePickerView}>
-            <Button title="Date Fin" onPress={() => setOpenfin(true)} />
-            <DatePicker
-                modal
-                open={openfin}
-                date={datefin}
-                onConfirm={(datefin) => {
-                    setOpenfin(false)
-                    setDatefin(datefin)
-                    console.log(datefin)
-                }}
-                onCancel={() => {
-                    setOpenfin(false)
-                }}
-            />
-            <Text>{datefin.toLocaleDateString() + " " + datefin.toLocaleTimeString()}</Text>
-        </View>
+            <View style={styles.inputView}>
+                <Text style={styles.title}>Date de début: </Text>
+
+                {/* <Button title="Date Debut" onPress={() => setOpendebut(true)} /> */}
+                <TouchableOpacity onPress={() => setOpendebut(true)}>
+                    <Text>{datedebut.toLocaleDateString() + " " + datedebut.toLocaleTimeString()} </Text>
+
+                    <DatePicker
+                        modal
+                        open={opendebut}
+                        date={datedebut}
+                        onConfirm={(datedebut) => {
+                            setOpendebut(false)
+                            setDatedebut(datedebut)
+                        }}
+                        onCancel={() => {
+                            setOpendebut(false)
+                        }}
+                    />
+                </TouchableOpacity>
+                <Text></Text>
+            </View>
+            <View style={styles.datePickerView}>
+                <Text style={styles.title}>Date Fin: </Text>
+
+                <TouchableOpacity onPress={() => setOpenfin(true)}>
+                    <Text>{datefin.toLocaleDateString() + " " + datefin.toLocaleTimeString()}</Text>
+
+                    <DatePicker
+                        modal
+                        open={openfin}
+                        date={datefin}
+                        onConfirm={(datefin) => {
+                            setOpenfin(false)
+                            setDatefin(datefin)
+                            console.log(datefin)
+                        }}
+                        onCancel={() => {
+                            setOpenfin(false)
+                        }}
+                    />
+                </TouchableOpacity>
+            </View>
             <View style={{ width: '70%', alignSelf: 'center' }}>
                 <Button
                     title={'Ajouter Evenement'}
-                    onPress={async () => {
-                        const db = await getDBConnection();
-
-                        let newTache = {
-                            id: 1,
-                            nom: nom,
-                            descr: descr,
-                            address:addresse,
-                            debut: debut,
-                            fin: fin,
-
-                        };
-                        console.log("passe store Tache")
-
-                        let id = await savestoreItem(db, nom, addresse, descr, 
-                            datedebut.toLocaleDateString() + " " + datedebut.toLocaleTimeString(), 
-                            datefin.toLocaleDateString() + " " + datefin.toLocaleTimeString());
-                        newTache.id = Object.values(id[0].rows.item(0))[0];
-                        console.log(newTache.id)
-
-                        dispatch({
-                            type: 'added',
-                            evenement: newTache,
-                        });
-                        console.log("passe dispatch")
+                    onPress={() => {
+                        ajouterUnEvent()
                         navigation.navigate('ListeEvenementInterface');
                     }
                     }
-                    disabled={!nom || !descr || !addresse }></Button>
+                    disabled={!nom || !descr || !addresse}></Button>
             </View>
         </View>);
 }
@@ -137,14 +152,16 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         gap: 10,
         paddingTop: 20,
-      },
+    },
     inputView: {
         flexDirection: 'column',
         alignItems: 'flex-start'
     },
     datePickerView: {
-        flexDirection: 'row',
-        alignItems: 'center'
+        flexDirection: 'column',
+
+        alignItems: 'flex-start'
+
     },
     title: {
         fontSize: 20,
