@@ -23,7 +23,6 @@ const ListeEvenementInterface = () => {
  
   return (
     <View style={styles.container}>
-      <ListeTemperature></ListeTemperature>
       <ListeEvenement />
       <TouchableOpacity
         onPress={() => {

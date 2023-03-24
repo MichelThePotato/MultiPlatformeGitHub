@@ -23,7 +23,7 @@ import {
   savestoreItem,
 } from './db-services';
 import {useNavigation} from '@react-navigation/native';
-
+import ListeTemperature from './ListeTemperature';
 import {Camera} from 'react-native-vision-camera';
 import Evenement from './Evenement';
 import {EvenementsContext, EvenementsDispatchContext} from './Context';
@@ -93,6 +93,8 @@ const ListeEvenement = () => {
       drawerPosition={'left'}
       renderNavigationView={navigationView}>
       <View>
+        
+      <ListeTemperature></ListeTemperature>
         <ScrollView>
           {evenements.map(evenement => (
             <Evenement key={evenement.id} evenement={evenement} />
