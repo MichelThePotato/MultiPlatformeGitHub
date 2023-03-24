@@ -1,8 +1,16 @@
 import { StyleSheet, Text, Image, View } from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
+import { ThemeContext } from './Context';
+import Colors from '../theme/Colors';
 
 const Temperature = ({ forecast }) => {
     const imageUri = 'https://openweathermap.org/img/wn/'+ forecast.icon + '.png'
+
+     /**
+   * amener le theme envoyé par ThemeContext dans le stack pour avoir accès au bonne couleur
+   */
+  const {themeChoisi, setThemeChoisi} = useContext(ThemeContext);
+  const styles = getStyles(themeChoisi);
 
     return (
         <View style={styles.container}>
@@ -16,7 +24,7 @@ const Temperature = ({ forecast }) => {
                 style={{width: 80, height: 80}}/>
             </View>
             <View style={styles.date}>
-                <Text>
+                <Text style={styles.pourText}>
                     {forecast.date}
                 </Text>
             </View>
@@ -26,7 +34,7 @@ const Temperature = ({ forecast }) => {
 
 export default Temperature;
 
-const styles = StyleSheet.create({
+const getStyles = theme => StyleSheet.create({
     container: {
         backgroundColor: '#b69cf6',
         padding: 5,
@@ -41,8 +49,12 @@ const styles = StyleSheet.create({
     temperature: {
         fontWeight: 'bold',
         fontSize: 20,
+        color: Colors[theme]?.colors.white,
     },
     date: {
         fontSize: 2,
     },
+    pourText:{
+        color: Colors[theme]?.colors.white,
+    }
 });

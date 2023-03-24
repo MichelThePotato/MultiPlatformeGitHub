@@ -12,10 +12,11 @@ import React, {useContext} from 'react';
 import {savestoreItem, getDBConnection} from './db-services';
 import {useNavigation} from '@react-navigation/native';
 import {store} from './Storage';
-import {EvenementsDispatchContext} from './Context';
+import {EvenementsDispatchContext, ThemeContext} from './Context';
 import DatePicker from 'react-native-date-picker';
 import { pushNotif } from './NotificationScreen';
 import {getIsEnabledNotifStorage} from './Storage';
+import Colors from '../theme/Colors';
 
 const Ajouterevent = () => {
   const navigation = useNavigation();
@@ -82,6 +83,12 @@ const Ajouterevent = () => {
     }
   };
 
+  /**
+   * amener le theme envoyé par ThemeContext dans le stack pour avoir accès au bonne couleur
+   */
+  const {themeChoisi, setThemeChoisi} = useContext(ThemeContext);
+  const styles = getStyles(themeChoisi);
+
   return (
     <View style={styles.container}>
       <View style={styles.inputView}>
@@ -90,7 +97,8 @@ const Ajouterevent = () => {
           style={styles.inputs}
           onChangeText={onTextChangeNom}
           defaultValue={nom}
-          placeholder="nom"></TextInput>
+          placeholder="nom"
+          placeholderTextColor={ Colors[themeChoisi]?.colors.gray}></TextInput>
       </View>
       <View style={styles.inputView}>
         <Text style={styles.title}>Description: </Text>
@@ -98,7 +106,8 @@ const Ajouterevent = () => {
           style={styles.inputs}
           onChangeText={onTextChangeDescr}
           defaultValue={descr}
-          placeholder="Description"></TextInput>
+          placeholder="Description"
+          placeholderTextColor={ Colors[themeChoisi]?.colors.gray}></TextInput>
       </View>
       <View style={styles.inputView}>
         <Text style={styles.title}>Addresse: </Text>
@@ -106,14 +115,15 @@ const Ajouterevent = () => {
           style={styles.inputs}
           onChangeText={onTextChangeAddresse}
           defaultValue={addresse}
-          placeholder="Addresse"></TextInput>
+          placeholder="Addresse"
+          placeholderTextColor={ Colors[themeChoisi]?.colors.gray}></TextInput>
       </View>
       <View style={styles.inputView}>
         <Text style={styles.title}>Date de début: </Text>
 
         {/* <Button title="Date Debut" onPress={() => setOpendebut(true)} /> */}
         <TouchableOpacity onPress={() => setOpendebut(true)}>
-          <Text>
+          <Text style={styles.pourText}>
             {datedebut.toLocaleDateString() +
               ' ' +
               datedebut.toLocaleTimeString()}{' '}
@@ -138,7 +148,7 @@ const Ajouterevent = () => {
         <Text style={styles.title}>Date Fin: </Text>
 
         <TouchableOpacity onPress={() => setOpenfin(true)}>
-          <Text>
+          <Text style={styles.pourText}>
             {datefin.toLocaleDateString() + ' ' + datefin.toLocaleTimeString()}
           </Text>
 
@@ -157,7 +167,7 @@ const Ajouterevent = () => {
           />
         </TouchableOpacity>
       </View>
-      <View style={{width: '70%', alignSelf: 'center'}}>
+      <View style={{width: '70%', alignSelf: 'center',paddingTop:50}}>
         <Button
           title={'Ajouter Evenement'}
           onPress={() => {
@@ -172,12 +182,13 @@ const Ajouterevent = () => {
 
 export default Ajouterevent;
 
-const styles = StyleSheet.create({
+const getStyles = theme => StyleSheet.create({
   container: {
     flex: 1,
     alignContent: 'center',
     gap: 10,
     paddingTop: 20,
+    backgroundColor: Colors[theme]?.colors.themeColor,
   },
   inputView: {
     flexDirection: 'column',
@@ -185,11 +196,19 @@ const styles = StyleSheet.create({
   },
   datePickerView: {
     flexDirection: 'column',
-
     alignItems: 'flex-start',
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: Colors[theme]?.colors.white,
+  },
+
+  inputs:{
+    backgroundColor: Colors[theme]?.colors.activeColor,
+  },
+
+  pourText: {
+    color: Colors[theme]?.colors.white,
   },
 });

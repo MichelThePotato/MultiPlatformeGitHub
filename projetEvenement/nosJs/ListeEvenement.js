@@ -26,7 +26,11 @@ import {useNavigation} from '@react-navigation/native';
 import ListeTemperature from './ListeTemperature';
 import {Camera} from 'react-native-vision-camera';
 import Evenement from './Evenement';
-import {EvenementsContext, EvenementsDispatchContext, ThemeContext} from './Context';
+import {
+  EvenementsContext,
+  EvenementsDispatchContext,
+  ThemeContext,
+} from './Context';
 import Colors from '../theme/Colors';
 
 const ListeEvenement = () => {
@@ -62,33 +66,36 @@ const ListeEvenement = () => {
       navigation.replace('CameraScreen');
   }, [cameraPermissionStatus, navigation]);
 
-   /**
+  /**
    * amener le theme envoyé par ThemeContext dans le stack pour avoir accès au bonne couleur
    */
-   const {themeChoisi, setThemeChoisi} = useContext(ThemeContext);
-   const styles = getStyles(themeChoisi);
-  
+  const {themeChoisi, setThemeChoisi} = useContext(ThemeContext);
+  const styles = getStyles(themeChoisi);
+
   const navigationView = () => (
-    <View style={[{flex: 1}, styles.container]}>
+    <View style={[{flex: 1}, styles.containerDrawer]}>
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('Preference');
         }}>
-        <View style={{flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Image
             style={styles.bordure}
             source={require('../photos/setting2.png')}
             resizeMode="contain"
           />
-          <Text>Preference</Text>
+          <Text style={styles.pourText}>Preference</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity onPress={requestCameraPermission}>
-        <Image
-          style={styles.bordure}
-          source={require('../photos/camera1.png')}
-          resizeMode="contain"
-        />
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Image
+            style={styles.bordure}
+            source={require('../photos/camera1.png')}
+            resizeMode="contain"
+          />
+          <Text style={styles.pourText}>Photo</Text>
+        </View>
       </TouchableOpacity>
     </View>
   );
@@ -100,8 +107,8 @@ const ListeEvenement = () => {
       drawerPosition={'left'}
       renderNavigationView={navigationView}>
       <View>
-        
-      <ListeTemperature></ListeTemperature>
+        <ListeTemperature></ListeTemperature>
+        <Text style={styles.titre}>Mes Évenements</Text>
         <ScrollView>
           {evenements.map(evenement => (
             <Evenement key={evenement.id} evenement={evenement} />
@@ -114,24 +121,30 @@ const ListeEvenement = () => {
 
 export default ListeEvenement;
 
-const getStyles = theme => StyleSheet.create({
-  bordure: {
-    height: 50,
-    width: 50,
-    margin: 10,
-    color: Colors[theme]?.colors.white,
-  },
+const getStyles = theme =>
+  StyleSheet.create({
+    bordure: {
+      height: 50,
+      width: 50,
+      margin: 10,
+    },
 
-  pourText: {
-    color: Colors[theme]?.colors.white,
-  },
+    pourText: {
+      color: Colors[theme]?.colors.white,
+    },
 
-  container:{
-    backgroundColor: Colors[theme]?.colors.themeColor,
-  },
+    container: {
+      backgroundColor: Colors[theme]?.colors.themeColor,
+    },
 
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-     backgroundColor: 'rgba(0,0,0,0.5)'
-  },
-});
+    containerDrawer: {
+      backgroundColor: Colors[theme]?.colors.sky,
+    },
+
+    titre: {
+      fontWeight: 'bold',
+      fontSize: 20,
+      color: Colors[theme]?.colors.white,
+      paddingTop: 20,
+    },
+  });

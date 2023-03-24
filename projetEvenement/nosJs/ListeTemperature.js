@@ -1,6 +1,8 @@
 import {StyleSheet, Text, View, ScrollView, Image } from 'react-native'
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import Temperature from './Temperature';
+import { ThemeContext } from './Context';
+import Colors from '../theme/Colors';
 
 const ListeTemperature = () => {
 
@@ -33,6 +35,12 @@ const ListeTemperature = () => {
 
     }, []);
 
+    /**
+   * amener le theme envoyé par ThemeContext dans le stack pour avoir accès au bonne couleur
+   */
+  const {themeChoisi, setThemeChoisi} = useContext(ThemeContext);
+  const styles = getStyles(themeChoisi);
+
     return (
         <View>
             <Text style={styles.titre}> Prévision Météorologique</Text>
@@ -44,17 +52,16 @@ const ListeTemperature = () => {
                 ))}
 
             </ScrollView>
-            <Text style={styles.titre}>Mes Évenements</Text>
         </View>
     )
-
 }
 
 export default ListeTemperature
 
-const styles = StyleSheet.create({
+const getStyles = theme => StyleSheet.create({
     titre: {
         fontWeight: 'bold',
         fontSize: 20,
+        color: Colors[theme]?.colors.white,
     },
 });

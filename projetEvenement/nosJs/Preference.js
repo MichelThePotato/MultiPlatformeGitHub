@@ -25,6 +25,9 @@ const Preference = () => {
   const themes = useColorScheme();
   const {themeChoisi, setThemeChoisi} = useContext(ThemeContext);
 
+  /**
+   * données associés au boutton radio
+   */
   const data = [
     {
       label: 'Light Mode',
@@ -40,11 +43,17 @@ const Preference = () => {
     },
   ];
 
+  /**
+   * switch case pour button radio afin de set le bon theme selon la valeur du button reçu
+   */
   const themeOperations = theme => {
     switch (theme) {
       case 'dark':
         setTheme(theme, false);
         setInitialValue(2);
+        /**
+         * setter pour envoyer le theme choisi au context ThemeContext afin que le theme des screens change
+         */
         setThemeChoisi(theme);
         return;
       case 'light':
@@ -142,26 +151,3 @@ const getStyles = theme =>
       color: Colors[theme]?.colors.white,
     },
   });
-
-// const getStyles = colors =>
-//   StyleSheet.create({
-//     container: {
-//       padding: 15,
-//     },
-//     containerOptions: {
-//       padding: 10,
-//       backgroundColor: colors.card,
-//       borderRadius: 15,
-//     },
-//     item: {
-//       flexDirection: 'row',
-//       justifyContent: 'space-between',
-//       paddingBottom: 15,
-//       alignItems: 'center',
-//     },
-//     pourText: {
-//       fontWeight: 'bold',
-//       fontSize: 20,
-//       color: colors.text,
-//     },
-//   });

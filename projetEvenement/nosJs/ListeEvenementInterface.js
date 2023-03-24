@@ -46,6 +46,7 @@ export default ListeEvenementInterface;
 
 const getStyles = theme => StyleSheet.create({
   container: {
+    padding:10,
     flex: 1,
     backgroundColor: Colors[theme]?.colors.themeColor,
   },
