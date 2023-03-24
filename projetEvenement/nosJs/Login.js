@@ -7,9 +7,9 @@ import {
   TextInput,
 } from 'react-native';
 import React from 'react';
-import { verifyUsers } from './Storage';
+import {verifyUsers} from './Storage';
 
-const Login = ({ navigation }) => {
+const Login = ({navigation}) => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
@@ -37,7 +37,7 @@ const Login = ({ navigation }) => {
 
       <View style={styles.placeholderContainer}>
         <TextInput
-          style={{ height: 40 }}
+          style={{height: 40}}
           placeholder={'Email'}
           onChangeText={onTextChange}
           defaultValue={email}
@@ -45,7 +45,7 @@ const Login = ({ navigation }) => {
       </View>
       <View style={styles.placeholderContainer}>
         <TextInput
-          style={{ height: 40 }}
+          style={{height: 40}}
           placeholder={'Password'}
           secureTextEntry={true}
           onChangeText={onTextChange2}

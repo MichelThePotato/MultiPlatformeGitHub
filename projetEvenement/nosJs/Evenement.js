@@ -1,20 +1,20 @@
-import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
-import React, { useContext, useEffect, useState, useRoute } from 'react';
+import {StyleSheet, Text, View, TouchableOpacity, Button} from 'react-native';
+import React, {useContext, useEffect, useState, useRoute} from 'react';
 
-import { LieuxContext } from './LieuContext';
-import { useNavigation } from '@react-navigation/native';
-import { deleteTodoItem, getDBConnection } from './db-services';
-import { EvenementsContext, EvenementsDispatchContext } from './Context';
+import {LieuxContext} from './LieuContext';
+import {useNavigation} from '@react-navigation/native';
+import {deleteTodoItem, getDBConnection} from './db-services';
+import {EvenementsContext, EvenementsDispatchContext} from './Context';
 
-const Evenement = ({ evenement }) => {
+const Evenement = ({evenement}) => {
   const navigation = useNavigation();
   const dispatch = useContext(EvenementsDispatchContext);
-  const { evenements } = useContext(EvenementsContext);
+  const {evenements} = useContext(EvenementsContext);
   const deleteItem = async id => {
     try {
       const db = await getDBConnection();
       await deleteTodoItem(db, id);
-      dispatch({ type: 'deleted', id: id });
+      dispatch({type: 'deleted', id: id});
     } catch (error) {
       console.error(error);
     }
@@ -22,14 +22,13 @@ const Evenement = ({ evenement }) => {
 
   return (
     <View>
-      <View style={{ padding: 10 }}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+      <View style={{padding: 10}}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text style={styles.item}> {evenement.nom} </Text>
-          <Text >Debut: {evenement.debut} </Text>
-
+          <Text>Debut: {evenement.debut} </Text>
         </View>
 
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <TouchableOpacity
             onPress={() => {
               deleteItem(evenement.id);
@@ -47,7 +46,7 @@ const Evenement = ({ evenement }) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('Modifierevent', { evenement });
+              navigation.navigate('Modifierevent', {evenement});
             }}>
             <Text>modifier</Text>
           </TouchableOpacity>

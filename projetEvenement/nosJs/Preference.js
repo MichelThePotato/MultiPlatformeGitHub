@@ -74,19 +74,17 @@ const Preference = () => {
         <View style={styles.item}>
           <Text style={styles.pourText}>Dark theme : </Text>
           <Switch onValueChange={toggleSwitch} value={isEnabled}></Switch>
-
-          
         </View>
 
         <RadioButtonRN
-            data={data}
-            selectedBtn={e => themeOperations(e?.value)}
-            initial={initialValue}
-            activeColor={Colors[themeValue]?.activeColor}
-            deactiveColor={Colors[themeValue]?.deactiveColor}
-            boxActiveBgColor={Colors[themeValue]?.boxActiveColor}
-            boxDeactiveBgColor={Colors[themeValue]?.themeColor}
-            textColor={Colors[themeValue]?.white}></RadioButtonRN>
+          data={data}
+          selectedBtn={e => themeOperations(e?.value)}
+          initial={initialValue}
+          activeColor={Colors[themeValue]?.activeColor}
+          deactiveColor={Colors[themeValue]?.deactiveColor}
+          boxActiveBgColor={Colors[themeValue]?.boxActiveColor}
+          boxDeactiveBgColor={Colors[themeValue]?.themeColor}
+          textColor={Colors[themeValue]?.white}></RadioButtonRN>
       </View>
     </View>
   );
@@ -103,7 +101,7 @@ const getStyles = theme =>
     },
     containerOptions: {
       padding: 10,
-      
+
       borderRadius: 15,
     },
     item: {
