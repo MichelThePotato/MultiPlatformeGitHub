@@ -14,6 +14,7 @@ import {useNavigation} from '@react-navigation/native';
 import {store} from './Storage';
 import {EvenementsDispatchContext} from './Context';
 import DatePicker from 'react-native-date-picker';
+import { pushNotif } from './NotificationScreen';
 
 const Ajouterevent = () => {
   const navigation = useNavigation();
@@ -38,6 +39,8 @@ const Ajouterevent = () => {
   const onTextChangeAddresse = text => {
     setAddresse(text);
   };
+
+  
 
   const ajouterUnEvent = async () => {
     const db = await getDBConnection();
@@ -68,6 +71,10 @@ const Ajouterevent = () => {
       evenement: newTache,
     });
     console.log('passe dispatch');
+    /**
+     * une notification lorsque l'évènement est enregistrer
+     */
+    pushNotif(`l'Evènement ${nom} à bien été enregistrer`);
   };
 
   return (
