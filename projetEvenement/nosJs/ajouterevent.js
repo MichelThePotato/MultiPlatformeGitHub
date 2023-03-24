@@ -189,7 +189,8 @@ const getStyles = theme =>
       flex: 1,
       alignContent: 'center',
       gap: 10,
-      paddingTop: 20,
+      padding: 10,
+      paddingTop: 10,
       backgroundColor: Colors[theme]?.colors.themeColor,
     },
     inputView: {

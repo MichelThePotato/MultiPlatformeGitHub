@@ -70,6 +70,7 @@ const App = () => {
 
   const [themeChoisi, setThemeChoisi] = useState('');
   const sendValueTheme = {themeChoisi, setThemeChoisi};
+
   const getAppTheme = useCallback(async () => {
     const theme = await getColorsPreferences('Theme');
     setThemeChoisi(theme);
@@ -142,16 +143,42 @@ const App = () => {
                     </TouchableOpacity>
                   ),
                   title: ' Athentification',
+
+                  headerStyle: {
+                    backgroundColor:
+                      Colors[themeChoisi]?.colors.headerBackground,
+                  },
+                  headerTitleStyle: {
+                    color: Colors[themeChoisi]?.colors.white,
+                  },
                 }}></Stack.Screen>
               <Stack.Screen name="SignUp" component={SignUp}></Stack.Screen>
               <Stack.Screen
                 name="Preference"
                 component={Preference}
-                options={{title: 'Préférence'}}></Stack.Screen>
+                options={{
+                  title: 'Préférence',
+                  headerStyle: {
+                    backgroundColor:
+                      Colors[themeChoisi]?.colors.headerBackground,
+                  },
+                  headerTitleStyle: {
+                    color: Colors[themeChoisi]?.colors.white,
+                  },
+                }}></Stack.Screen>
               <Stack.Screen
                 name="ListeEvenementInterface"
                 component={ListeEvenementInterface}
-                options={{title: 'Acceuil'}}></Stack.Screen>
+                options={{
+                  title: 'Acceuil',
+                  headerStyle: {
+                    backgroundColor:
+                      Colors[themeChoisi]?.colors.headerBackground,
+                  },
+                  headerTitleStyle: {
+                    color: Colors[themeChoisi]?.colors.white,
+                  },
+                }}></Stack.Screen>
               <Stack.Screen
                 name="CameraScreen"
                 component={CameraScreen}></Stack.Screen>
@@ -161,7 +188,16 @@ const App = () => {
               <Stack.Screen
                 name="Ajouterevent"
                 component={Ajouterevent}
-                options={{title: 'Ajouter un évenement'}}
+                options={{
+                  title: 'Ajouter un évenement',
+                  headerStyle: {
+                    backgroundColor:
+                      Colors[themeChoisi]?.colors.headerBackground,
+                  },
+                  headerTitleStyle: {
+                    color: Colors[themeChoisi]?.colors.white,
+                  },
+                }}
               />
 
               <Stack.Screen

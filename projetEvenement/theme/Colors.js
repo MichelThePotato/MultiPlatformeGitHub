@@ -27,6 +27,7 @@ const commonColor = {
 const light = {
   colors: {
     themeColor: '#FFFFFF',
+    headerBackground: '#FFFFFF',
     white: '#000000',
     sky: '#DE5E69',
     gray: 'gray',
@@ -40,6 +41,7 @@ const light = {
 const dark = {
   colors: {
     themeColor: '#000000',
+    headerBackground: '#828282',
     white: '#FFFFFF',
     sky: '#831a23',
     gray: 'white',
