@@ -60,7 +60,7 @@ const ListeEvenement = () => {
     if (cameraPermissionStatus === 'authorized')
       navigation.replace('CameraScreen');
   }, [cameraPermissionStatus, navigation]);
-
+  
   const navigationView = () => (
     <View style={{flex: 1}}>
       <TouchableOpacity

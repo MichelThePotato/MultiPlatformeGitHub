@@ -12,12 +12,13 @@ import {
   getDBConnection,
   getstoreItems,
   savestoreItem,
-} from './db-service';
+} from './db-services';
 import ListeEvenement from './ListeEvenement';
+
 
 const ListeEvenementInterface = () => {
   const navigation = useNavigation();
-
+ 
   return (
     <View style={styles.container}>
       <ListeEvenement />

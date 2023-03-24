@@ -49,9 +49,9 @@ const Ajouterevent = () => {
       id: 1,
       nom: nom,
       descr: descr,
-      address: addresse,
-      debut: debut,
-      fin: fin,
+      addresse: addresse,
+      debut:datedebut.toLocaleDateString() + ' ' + datedebut.toLocaleTimeString(),
+      fin:datefin.toLocaleDateString() + ' ' + datefin.toLocaleTimeString(),
     };
     console.log('passe store Tache');
 

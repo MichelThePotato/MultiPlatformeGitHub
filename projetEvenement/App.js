@@ -81,7 +81,7 @@ const App = () => {
   const showPermissionsPage = cameraPermission !== 'authorized';
 
   //const value = console.log(showPermissionsPage);
-
+  
   return (
     <NavigationContainer
       ref={navigationRef}
