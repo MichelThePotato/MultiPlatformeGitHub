@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   PermissionsAndroid,
+  useColorScheme,
 } from 'react-native';
 import React, {
   useState,
@@ -17,6 +18,8 @@ import React, {
 import {
   NavigationContainer,
   useNavigationContainerRef,
+  DarkTheme,
+  DefaultTheme,
 } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useCameraDevices, Camera} from 'react-native-vision-camera';
@@ -33,12 +36,26 @@ import {EvenementsContext, EvenementsDispatchContext} from './nosJs/Context';
 import ListeEvenementInterface from './nosJs/ListeEvenementInterface';
 import CameraScreen from './nosJs/CameraScreen';
 import PermissionScreen from './nosJs/PermissionScreen';
+import {getColorsPreferences, saveColorsPreferences} from './nosJs/Storage';
+
+const Stack = createNativeStackNavigator();
 
 const App = () => {
-  const Stack = createNativeStackNavigator();
   const navigationRef = useNavigationContainerRef();
   const [cameraPermission, setCameraPermission] = useState();
   const [evenements, dispatch] = useReducer(EvenementReducer, []);
+  const theme = useColorScheme();
+
+  const appearance = useColorScheme();
+  const setAppTheme = useCallback(async () => {
+    const IS_FIRST = await getColorsPreferences('IS_FIRST');
+    if (IS_FIRST === null) {
+      saveColorsPreferences('Theme', appearance);
+      saveColorsPreferences('IsDefault', true);
+      saveColorsPreferences('IS_FIRST', true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     Camera.getCameraPermissionStatus().then(setCameraPermission);
@@ -51,7 +68,8 @@ const App = () => {
     }
 
     fetchFromStorage();
-  }, []);
+    setAppTheme();
+  }, [setAppTheme]);
 
   console.log(`Re-rendering Navigator. Camera: ${cameraPermission}`);
   if (cameraPermission == null) {
@@ -61,8 +79,11 @@ const App = () => {
 
   const showPermissionsPage = cameraPermission !== 'authorized';
   const value = console.log(showPermissionsPage);
+
   return (
-    <NavigationContainer ref={navigationRef}>
+    <NavigationContainer
+      ref={navigationRef}
+      theme={theme === 'dark' ? DarkTheme : DefaultTheme}>
       <EvenementsContext.Provider value={evenements}>
         <EvenementsDispatchContext.Provider value={dispatch}>
           <Stack.Navigator>

@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
 export const storeUser = async user => {
@@ -133,4 +134,44 @@ export const updateLogin = async login => {
   } catch (e) {
     // saving error
   }
+};
+
+/**
+ * méthode pour la gestion de stokage des préférences de theme
+ */
+
+export const saveStringColors = async (key, value) => {
+  let resultat = false;
+  try {
+    await AsyncStorage.setItem(key, value);
+    resultat = true;
+  } catch (error) {
+    resultat = false;
+    console('erreur pour la sauveguarde string colors : ', error);
+  }
+  return resultat;
+};
+
+export const saveColorsPreferences = async (key, value) => {
+  saveStringColors(key, JSON.stringify(value));
+  console('saveColorsPreferences key : ', key, ' value : ', value);
+};
+
+export const getColorsPreferences = async key => {
+  try {
+    const itemString = await AsyncStorage.getItem(key);
+    if (itemString) {
+      return JSON.parse(itemString);
+    } else {
+      return null;
+    }
+  } catch (error) {
+    return null;
+  }
+};
+
+export default {
+  saveStringColors,
+  saveColorsPreferences,
+  getColorsPreferences,
 };
