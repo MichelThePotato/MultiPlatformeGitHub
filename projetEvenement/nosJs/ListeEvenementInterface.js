@@ -5,7 +5,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {
   createTable,
@@ -15,11 +15,18 @@ import {
 } from './db-services';
 import ListeEvenement from './ListeEvenement';
 import ListeTemperature from './ListeTemperature';
-
+import { ThemeContext } from './Context';
+import Colors from '../theme/Colors';
 
 
 const ListeEvenementInterface = () => {
   const navigation = useNavigation();
+
+  /**
+   * amener le theme envoyé par ThemeContext dans le stack pour avoir accès au bonne couleur
+   */
+  const {themeChoisi, setThemeChoisi} = useContext(ThemeContext);
+  const styles = getStyles(themeChoisi);
  
   return (
     <View style={styles.container}>
@@ -38,9 +45,10 @@ const ListeEvenementInterface = () => {
 
 export default ListeEvenementInterface;
 
-const styles = StyleSheet.create({
+const getStyles = theme => StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Colors[theme]?.colors.themeColor,
   },
   roundTouch: {
     width: 60,

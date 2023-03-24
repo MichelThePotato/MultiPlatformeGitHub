@@ -1,9 +1,15 @@
 import {StyleSheet, Text, View, Switch, useColorScheme} from 'react-native';
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback, useContext} from 'react';
 import {useTheme} from '@react-navigation/native';
 import RadioButtonRN from 'radio-buttons-react-native';
-import Storage, {getColorsPreferences, saveColorsPreferences, setIsEnabledNotifStorage, getIsEnabledNotifStorage} from './Storage';
+import Storage, {
+  getColorsPreferences,
+  saveColorsPreferences,
+  setIsEnabledNotifStorage,
+  getIsEnabledNotifStorage,
+} from './Storage';
 import Colors from '../theme/Colors';
+import {ThemeContext} from './Context';
 
 const Preference = () => {
   // const colors = useTheme().colors;
@@ -11,12 +17,13 @@ const Preference = () => {
 
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-  
+
   const [isEnabledNotif, setIsEnabledNotif] = useState(false);
 
   const [themeValue, setThemeValue] = useState('');
   const [initialValue, setInitialValue] = useState(0);
   const themes = useColorScheme();
+  const {themeChoisi, setThemeChoisi} = useContext(ThemeContext);
 
   const data = [
     {
@@ -38,14 +45,17 @@ const Preference = () => {
       case 'dark':
         setTheme(theme, false);
         setInitialValue(2);
+        setThemeChoisi(theme);
         return;
       case 'light':
         setTheme(theme, false);
         setInitialValue(1);
+        setThemeChoisi(theme);
         return;
       case 'default':
         setTheme(themes, true);
         setInitialValue(3);
+        setThemeChoisi(theme);
         return;
     }
   };
@@ -65,15 +75,15 @@ const Preference = () => {
 
   useEffect(() => {
     async function loadSwitch() {
-      setIsEnabledNotif(await getIsEnabledNotifStorage("isNotifEnabled"));
+      setIsEnabledNotif(await getIsEnabledNotifStorage('isNotifEnabled'));
     }
     loadSwitch();
     getAppTheme();
   }, [getAppTheme]);
 
   async function toggleSwitchNotification() {
-    setIsEnabledNotif(previousStateNotif => !previousStateNotif)
-    await setIsEnabledNotifStorage("isNotifEnabled", !isEnabledNotif);
+    setIsEnabledNotif(previousStateNotif => !previousStateNotif);
+    await setIsEnabledNotifStorage('isNotifEnabled', !isEnabledNotif);
   }
 
   const styles = getStyles(themeValue);
@@ -84,22 +94,24 @@ const Preference = () => {
         <Text>Settings</Text>
         <View style={styles.item}>
           <Text style={styles.pourText}>Notification : </Text>
-          <Switch onValueChange={toggleSwitchNotification} value={isEnabledNotif}></Switch>
+          <Switch
+            onValueChange={toggleSwitchNotification}
+            value={isEnabledNotif}
+            trackColor={{true: Colors[themeValue]?.colors.activeColor, false: Colors[themeValue]?.colors.deactiveColor}}></Switch>
         </View>
         <View style={styles.item}>
-          <Text style={styles.pourText}>Dark theme : </Text>
-          <Switch onValueChange={toggleSwitch} value={isEnabled}></Switch>
+          <Text style={styles.pourText}>Theme : </Text>
         </View>
 
         <RadioButtonRN
           data={data}
           selectedBtn={e => themeOperations(e?.value)}
           initial={initialValue}
-          activeColor={Colors[themeValue]?.activeColor}
-          deactiveColor={Colors[themeValue]?.deactiveColor}
-          boxActiveBgColor={Colors[themeValue]?.boxActiveColor}
-          boxDeactiveBgColor={Colors[themeValue]?.themeColor}
-          textColor={Colors[themeValue]?.white}></RadioButtonRN>
+          activeColor={Colors[themeValue]?.colors.activeColor}
+          deactiveColor={Colors[themeValue]?.colors.deactiveColor}
+          boxActiveBgColor={Colors[themeValue]?.colors.boxActiveColor}
+          boxDeactiveBgColor={Colors[themeValue]?.colors.themeColor}
+          textColor={Colors[themeValue]?.colors.white}></RadioButtonRN>
       </View>
     </View>
   );
@@ -111,12 +123,11 @@ const getStyles = theme =>
   StyleSheet.create({
     container: {
       padding: 15,
-      backgroundColor: Colors[theme]?.themeColor,
+      backgroundColor: Colors[theme]?.colors.themeColor,
       flex: 1,
     },
     containerOptions: {
       padding: 10,
-
       borderRadius: 15,
     },
     item: {
@@ -128,7 +139,7 @@ const getStyles = theme =>
     pourText: {
       fontWeight: 'bold',
       fontSize: 20,
-      color: Colors[theme]?.white,
+      color: Colors[theme]?.colors.white,
     },
   });
 

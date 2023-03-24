@@ -4,7 +4,8 @@ import React, {useContext, useEffect, useState, useRoute} from 'react';
 import {LieuxContext} from './LieuContext';
 import {useNavigation} from '@react-navigation/native';
 import {deleteTodoItem, getDBConnection} from './db-services';
-import {EvenementsContext, EvenementsDispatchContext} from './Context';
+import {EvenementsContext, EvenementsDispatchContext, ThemeContext} from './Context';
+import Colors from '../theme/Colors';
 
 const Evenement = ({evenement}) => {
   const navigation = useNavigation();
@@ -20,12 +21,19 @@ const Evenement = ({evenement}) => {
     }
   };
 
+  /**
+   * amener le theme envoyé par ThemeContext dans le stack pour avoir accès au bonne couleur
+   */
+  const {themeChoisi, setThemeChoisi} = useContext(ThemeContext);
+  const styles = getStyles(themeChoisi);
+
+
   return (
     <View>
       <View style={{padding: 10}}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text style={styles.item}> {evenement.nom} </Text>
-          <Text>Debut: {evenement.debut} </Text>
+          <Text style={styles.pourText}>Debut: {evenement.debut} </Text>
         </View>
 
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -33,7 +41,7 @@ const Evenement = ({evenement}) => {
             onPress={() => {
               deleteItem(evenement.id);
             }}>
-            <Text>Supprimer</Text>
+            <Text style={styles.pourText}>Supprimer</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
@@ -42,13 +50,7 @@ const Evenement = ({evenement}) => {
                 unEvenement: evenement,
               });
             }}>
-            <Text>detail</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('Modifierevent', {evenement});
-            }}>
-            <Text>modifier</Text>
+            <Text style={styles.pourText}>detail</Text>
           </TouchableOpacity>
         </View>
 
@@ -60,15 +62,20 @@ const Evenement = ({evenement}) => {
 
 export default Evenement;
 
-const styles = StyleSheet.create({
+const getStyles = theme => StyleSheet.create({
   item: {
     fontSize: 15,
     fontWeight: 'bold',
+    color: Colors[theme]?.colors.white,
   },
 
   ligne: {
-    borderBottomColor: 'black',
+    borderBottomColor: Colors[theme]?.colors.white,
     borderBottomWidth: StyleSheet.hairlineWidth,
     paddingHorizontal: 5,
+  },
+
+  pourText: {
+    color: Colors[theme]?.colors.white,
   },
 });

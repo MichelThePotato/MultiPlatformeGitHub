@@ -23,7 +23,6 @@ import {
 } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useCameraDevices, Camera} from 'react-native-vision-camera';
-import Modifierevent from './nosJs/Modifierevent';
 import Login from './nosJs/Login';
 import SignUp from './nosJs/SignUp';
 import Preference from './nosJs/Preference';
@@ -32,11 +31,12 @@ import DetailEvent from './nosJs/DetailEvent';
 import Ajouterevent from './nosJs/ajouterevent';
 import {EvenementReducer} from './nosJs/EvenementReducer';
 import {getstoreItems, getDBConnection, createTable} from './nosJs/db-services';
-import {EvenementsContext, EvenementsDispatchContext} from './nosJs/Context';
+import {EvenementsContext, EvenementsDispatchContext, ThemeContext} from './nosJs/Context';
 import ListeEvenementInterface from './nosJs/ListeEvenementInterface';
 import CameraScreen from './nosJs/CameraScreen';
 import PermissionScreen from './nosJs/PermissionScreen';
 import {getColorsPreferences, saveColorsPreferences} from './nosJs/Storage';
+import Colors from './theme/Colors';
 
 const Stack = createNativeStackNavigator();
 
@@ -45,17 +45,32 @@ const App = () => {
   const [cameraPermission, setCameraPermission] = useState();
   const [evenements, dispatch] = useReducer(EvenementReducer, []);
   const theme = useColorScheme();
+  // const theme = getColorsPreferences('Theme');
 
   const appearance = useColorScheme();
+
+  /**
+   *  méthode qui set le theme qui à été choisi dans les préférence
+   */
   const setAppTheme = useCallback(async () => {
     const IS_FIRST = await getColorsPreferences('IS_FIRST');
     if (IS_FIRST === null) {
       saveColorsPreferences('Theme', appearance);
       saveColorsPreferences('IsDefault', true);
       saveColorsPreferences('IS_FIRST', true);
+    } else {
+      // theme = await getColorsPreferences('IS_FIRST');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const [themeChoisi, setThemeChoisi] = useState('');
+  const sendValueTheme = {themeChoisi, setThemeChoisi};
+  const getAppTheme = useCallback(async () => {
+    const theme = await getColorsPreferences('Theme');
+    setThemeChoisi(theme);
+  }, []);
+
 
   useEffect(() => {
     Camera.getCameraPermissionStatus().then(setCameraPermission);
@@ -69,8 +84,13 @@ const App = () => {
     }
 
     fetchFromStorage();
+
+    /**
+     * appeller la méthode qui set le theme qui à été choisi dans les préférence
+     */
     setAppTheme();
-  }, [setAppTheme]);
+    getAppTheme();
+  }, [setAppTheme,getAppTheme]);
 
   console.log(`Re-rendering Navigator. Camera: ${cameraPermission}`);
   if (cameraPermission == null) {
@@ -85,9 +105,14 @@ const App = () => {
   return (
     <NavigationContainer
       ref={navigationRef}
-      theme={theme === 'dark' ? DarkTheme : DefaultTheme}>
+      /**
+       * ancienne version de varible theme utilisé au cas oû
+       * theme === 'dark' ? DarkTheme : DefaultTheme
+       */
+      theme={theme === 'dark' ? Colors.dark : Colors.light}>
       <EvenementsContext.Provider value={evenements}>
         <EvenementsDispatchContext.Provider value={dispatch}>
+          <ThemeContext.Provider value={sendValueTheme}>
           <Stack.Navigator>
             <Stack.Screen
               name="Login"
@@ -113,7 +138,7 @@ const App = () => {
                     />
                   </TouchableOpacity>
                 ),
-                title: 'Athentification',
+                title: ' Athentification',
               }}></Stack.Screen>
             <Stack.Screen name="SignUp" component={SignUp}></Stack.Screen>
             <Stack.Screen
@@ -135,9 +160,6 @@ const App = () => {
               component={Ajouterevent}
               options={{title: 'Ajouter un évenement'}}
             />
-            <Stack.Screen
-              name="Modifierevent"
-              component={Modifierevent}></Stack.Screen>
 
             <Stack.Screen
               name="DetailEvent"
@@ -146,6 +168,7 @@ const App = () => {
                 title: route.params.name,
               })}></Stack.Screen>
           </Stack.Navigator>
+          </ThemeContext.Provider>
         </EvenementsDispatchContext.Provider>
       </EvenementsContext.Provider>
     </NavigationContainer>

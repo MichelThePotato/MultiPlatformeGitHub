@@ -26,7 +26,8 @@ import {useNavigation} from '@react-navigation/native';
 
 import {Camera} from 'react-native-vision-camera';
 import Evenement from './Evenement';
-import {EvenementsContext, EvenementsDispatchContext} from './Context';
+import {EvenementsContext, EvenementsDispatchContext, ThemeContext} from './Context';
+import Colors from '../theme/Colors';
 
 const ListeEvenement = () => {
   const drawer = useRef(null);
@@ -60,9 +61,15 @@ const ListeEvenement = () => {
     if (cameraPermissionStatus === 'authorized')
       navigation.replace('CameraScreen');
   }, [cameraPermissionStatus, navigation]);
+
+   /**
+   * amener le theme envoyé par ThemeContext dans le stack pour avoir accès au bonne couleur
+   */
+   const {themeChoisi, setThemeChoisi} = useContext(ThemeContext);
+   const styles = getStyles(themeChoisi);
   
   const navigationView = () => (
-    <View style={{flex: 1}}>
+    <View style={[{flex: 1}, styles.container]}>
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('Preference');
@@ -105,10 +112,24 @@ const ListeEvenement = () => {
 
 export default ListeEvenement;
 
-const styles = StyleSheet.create({
+const getStyles = theme => StyleSheet.create({
   bordure: {
     height: 50,
     width: 50,
     margin: 10,
+    color: Colors[theme]?.colors.white,
+  },
+
+  pourText: {
+    color: Colors[theme]?.colors.white,
+  },
+
+  container:{
+    backgroundColor: Colors[theme]?.colors.themeColor,
+  },
+
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+     backgroundColor: 'rgba(0,0,0,0.5)'
   },
 });

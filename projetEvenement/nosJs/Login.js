@@ -5,13 +5,31 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  Alert,
+  ScrollView,
 } from 'react-native';
-import React from 'react';
-import {verifyUsers} from './Storage';
+import React, {useCallback, useEffect, useState, useContext} from 'react';
+import {getColorsPreferences, verifyUsers} from './Storage';
+import {useTheme} from '@react-navigation/native';
+import Colors from '../theme/Colors';
+import {ThemeContext} from './Context';
 
 const Login = ({navigation}) => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+
+  /**
+   * const pour aller chercher les couleurs du theme
+   * envoyé dans le navigator container pour pouvoir les utiliser dans
+   * le Stylesheet du stack affiché
+   */
+  // const colors = useTheme().colors;
+
+  /**
+   * amener le theme envoyé par ThemeContext dans le stack pour avoir accès au bonne couleur
+   */
+  const {themeChoisi, setThemeChoisi} = useContext(ThemeContext);
+  const styles = getStyles(themeChoisi);
 
   const onTextChange = text => {
     setEmail(text);
@@ -37,19 +55,21 @@ const Login = ({navigation}) => {
 
       <View style={styles.placeholderContainer}>
         <TextInput
-          style={{height: 40}}
+          style={[{height: 40}, styles.pourText]}
           placeholder={'Email'}
           onChangeText={onTextChange}
           defaultValue={email}
+          placeholderTextColor={'#DE5E69'}
         />
       </View>
       <View style={styles.placeholderContainer}>
         <TextInput
-          style={{height: 40}}
+          style={[{height: 40}, styles.pourText]}
           placeholder={'Password'}
           secureTextEntry={true}
           onChangeText={onTextChange2}
           defaultValue={password}
+          placeholderTextColor={'#DE5E69'}
         />
       </View>
 
@@ -57,7 +77,7 @@ const Login = ({navigation}) => {
         <TouchableOpacity
           style={styles.boutonNewUtilisateur}
           onPress={() => navigation.push('SignUp')}>
-          <Text>Nouvelle utilisateur?</Text>
+          <Text style={styles.pourText}>Nouvelle utilisateur?</Text>
         </TouchableOpacity>
       </View>
 
@@ -74,45 +94,53 @@ const Login = ({navigation}) => {
 
 export default Login;
 
-const styles = StyleSheet.create({
-  main_contain: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: 'white',
-    padding: 20,
-  },
+const getStyles = theme =>
+  StyleSheet.create({
+    main_contain: {
+      flex: 1,
+      alignItems: 'center',
+      padding: 20,
+      backgroundColor: Colors[theme]?.colors.themeColor,
+      color: Colors[theme]?.colors.white,
+    },
 
-  title: {
-    fontSize: 30,
-  },
-  placeholderContainer: {
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    borderRadius: 10,
-    width: '80%',
-  },
+    title: {
+      fontSize: 30,
+    },
+    placeholderContainer: {
+      margin: 12,
+      borderWidth: 1,
+      padding: 10,
+      borderRadius: 10,
+      width: '80%',
+      borderColor: Colors[theme]?.colors.sky,
+    },
 
-  boutonLogin: {
-    margin: 12,
-    padding: 10,
-    borderRadius: 10,
-    width: '80%',
-    borderWidth: 1,
-    backgroundColor: '#708090',
-  },
+    boutonLogin: {
+      margin: 12,
+      padding: 10,
+      borderRadius: 10,
+      width: '80%',
+      borderWidth: 1,
+      backgroundColor: '#708090',
+    },
 
-  boutonNewUtilisateur: {
-    backgroundColor: 'transparent',
-  },
+    boutonNewUtilisateur: {
+      backgroundColor: 'transparent',
+    },
 
-  logo: {
-    height: 50,
-    width: 50,
-  },
-  boutonTextStyle: {
-    height: 40,
-    alignSelf: 'center',
-    fontSize: 20,
-  },
-});
+    logo: {
+      height: 50,
+      width: 50,
+    },
+    boutonTextStyle: {
+      height: 40,
+      alignSelf: 'center',
+      fontSize: 20,
+      color: Colors[theme]?.colors.white,
+    },
+
+    pourText: {
+      color: Colors[theme]?.colors.white,
+    },
+  });

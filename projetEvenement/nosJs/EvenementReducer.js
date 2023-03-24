@@ -18,15 +18,6 @@ export function EvenementReducer(evenements, action) {
         },
       ];
     }
-    case 'changed': {
-      return evenements.map(t => {
-        if (t.id === action.evenement.id) {
-          return action.evenement;
-        } else {
-          return t;
-        }
-      });
-    }
     case 'deleted': {
       return evenements.filter(t => t.id !== action.id);
     }
