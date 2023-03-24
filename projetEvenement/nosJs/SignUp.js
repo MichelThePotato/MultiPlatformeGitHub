@@ -2,7 +2,7 @@ import {StyleSheet, Text, View, TextInput, Button} from 'react-native';
 import React, {useContext} from 'react';
 import {storeUser, getUser} from './Storage';
 import {useNavigation} from '@react-navigation/native';
-import { ThemeContext } from './Context';
+import {ThemeContext} from './Context';
 import Colors from '../theme/Colors';
 
 const Signuppage = ({navigation}) => {
@@ -75,23 +75,24 @@ const Signuppage = ({navigation}) => {
 
 export default Signuppage;
 
-const getStyles = theme => StyleSheet.create({
-  container: {
-    flex: 1,
-    alignContent: 'center',
-    // borderColor: "red",
-    // borderWidth: 2,
-    gap: 10,
-    paddingTop: 20,
-    backgroundColor: Colors[theme]?.colors.themeColor,
-  },
-  inputs: {
-    width: '80%',
-    borderColor: 'grey',
-    borderWidth: 2,
-    alignSelf: 'center',
-    borderRadius: 15,
-    color: Colors[theme]?.colors.white,
-    textAlign: 'center',
-  },
-});
+const getStyles = theme =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      alignContent: 'center',
+      // borderColor: "red",
+      // borderWidth: 2,
+      gap: 10,
+      paddingTop: 20,
+      backgroundColor: Colors[theme]?.colors.themeColor,
+    },
+    inputs: {
+      width: '80%',
+      borderColor: 'grey',
+      borderWidth: 2,
+      alignSelf: 'center',
+      borderRadius: 15,
+      color: Colors[theme]?.colors.white,
+      textAlign: 'center',
+    },
+  });

@@ -14,7 +14,7 @@ import {useNavigation} from '@react-navigation/native';
 import {store} from './Storage';
 import {EvenementsDispatchContext, ThemeContext} from './Context';
 import DatePicker from 'react-native-date-picker';
-import { pushNotif } from './NotificationScreen';
+import {pushNotif} from './NotificationScreen';
 import {getIsEnabledNotifStorage} from './Storage';
 import Colors from '../theme/Colors';
 
@@ -42,8 +42,6 @@ const Ajouterevent = () => {
     setAddresse(text);
   };
 
-  
-
   const ajouterUnEvent = async () => {
     const db = await getDBConnection();
 
@@ -52,8 +50,9 @@ const Ajouterevent = () => {
       nom: nom,
       descr: descr,
       addresse: addresse,
-      debut:datedebut.toLocaleDateString() + ' ' + datedebut.toLocaleTimeString(),
-      fin:datefin.toLocaleDateString() + ' ' + datefin.toLocaleTimeString(),
+      debut:
+        datedebut.toLocaleDateString() + ' ' + datedebut.toLocaleTimeString(),
+      fin: datefin.toLocaleDateString() + ' ' + datefin.toLocaleTimeString(),
     };
     console.log('passe store Tache');
 
@@ -76,9 +75,11 @@ const Ajouterevent = () => {
     /**
      * une notification lorsque l'évènement est enregistrer
      */
-    console.log(await getIsEnabledNotifStorage("isNotifEnabled") + " IsNotifActif");
-    if(await getIsEnabledNotifStorage("isNotifEnabled") == "true") {
-      console.log("notif go brrrrrrrrrrrr")
+    console.log(
+      (await getIsEnabledNotifStorage('isNotifEnabled')) + ' IsNotifActif',
+    );
+    if ((await getIsEnabledNotifStorage('isNotifEnabled')) == 'true') {
+      console.log('notif go brrrrrrrrrrrr');
       pushNotif(`l'Evènement ${nom} à bien été enregistrer`);
     }
   };
@@ -98,7 +99,7 @@ const Ajouterevent = () => {
           onChangeText={onTextChangeNom}
           defaultValue={nom}
           placeholder="nom"
-          placeholderTextColor={ Colors[themeChoisi]?.colors.gray}></TextInput>
+          placeholderTextColor={Colors[themeChoisi]?.colors.gray}></TextInput>
       </View>
       <View style={styles.inputView}>
         <Text style={styles.title}>Description: </Text>
@@ -107,7 +108,7 @@ const Ajouterevent = () => {
           onChangeText={onTextChangeDescr}
           defaultValue={descr}
           placeholder="Description"
-          placeholderTextColor={ Colors[themeChoisi]?.colors.gray}></TextInput>
+          placeholderTextColor={Colors[themeChoisi]?.colors.gray}></TextInput>
       </View>
       <View style={styles.inputView}>
         <Text style={styles.title}>Addresse: </Text>
@@ -116,7 +117,7 @@ const Ajouterevent = () => {
           onChangeText={onTextChangeAddresse}
           defaultValue={addresse}
           placeholder="Addresse"
-          placeholderTextColor={ Colors[themeChoisi]?.colors.gray}></TextInput>
+          placeholderTextColor={Colors[themeChoisi]?.colors.gray}></TextInput>
       </View>
       <View style={styles.inputView}>
         <Text style={styles.title}>Date de début: </Text>
@@ -167,7 +168,7 @@ const Ajouterevent = () => {
           />
         </TouchableOpacity>
       </View>
-      <View style={{width: '70%', alignSelf: 'center',paddingTop:50}}>
+      <View style={{width: '70%', alignSelf: 'center', paddingTop: 50}}>
         <Button
           title={'Ajouter Evenement'}
           onPress={() => {
@@ -182,33 +183,34 @@ const Ajouterevent = () => {
 
 export default Ajouterevent;
 
-const getStyles = theme => StyleSheet.create({
-  container: {
-    flex: 1,
-    alignContent: 'center',
-    gap: 10,
-    paddingTop: 20,
-    backgroundColor: Colors[theme]?.colors.themeColor,
-  },
-  inputView: {
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-  },
-  datePickerView: {
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: Colors[theme]?.colors.white,
-  },
+const getStyles = theme =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      alignContent: 'center',
+      gap: 10,
+      paddingTop: 20,
+      backgroundColor: Colors[theme]?.colors.themeColor,
+    },
+    inputView: {
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+    },
+    datePickerView: {
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+    },
+    title: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      color: Colors[theme]?.colors.white,
+    },
 
-  inputs:{
-    backgroundColor: Colors[theme]?.colors.activeColor,
-  },
+    inputs: {
+      backgroundColor: Colors[theme]?.colors.activeColor,
+    },
 
-  pourText: {
-    color: Colors[theme]?.colors.white,
-  },
-});
+    pourText: {
+      color: Colors[theme]?.colors.white,
+    },
+  });

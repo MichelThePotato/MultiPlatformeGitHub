@@ -4,7 +4,11 @@ import React, {useContext, useEffect, useState, useRoute} from 'react';
 import {LieuxContext} from './LieuContext';
 import {useNavigation} from '@react-navigation/native';
 import {deleteTodoItem, getDBConnection} from './db-services';
-import {EvenementsContext, EvenementsDispatchContext, ThemeContext} from './Context';
+import {
+  EvenementsContext,
+  EvenementsDispatchContext,
+  ThemeContext,
+} from './Context';
 import Colors from '../theme/Colors';
 
 const Evenement = ({evenement}) => {
@@ -26,7 +30,6 @@ const Evenement = ({evenement}) => {
    */
   const {themeChoisi, setThemeChoisi} = useContext(ThemeContext);
   const styles = getStyles(themeChoisi);
-
 
   return (
     <View>
@@ -62,20 +65,21 @@ const Evenement = ({evenement}) => {
 
 export default Evenement;
 
-const getStyles = theme => StyleSheet.create({
-  item: {
-    fontSize: 15,
-    fontWeight: 'bold',
-    color: Colors[theme]?.colors.white,
-  },
+const getStyles = theme =>
+  StyleSheet.create({
+    item: {
+      fontSize: 15,
+      fontWeight: 'bold',
+      color: Colors[theme]?.colors.white,
+    },
 
-  ligne: {
-    borderBottomColor: Colors[theme]?.colors.white,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    paddingHorizontal: 5,
-  },
+    ligne: {
+      borderBottomColor: Colors[theme]?.colors.white,
+      borderBottomWidth: StyleSheet.hairlineWidth,
+      paddingHorizontal: 5,
+    },
 
-  pourText: {
-    color: Colors[theme]?.colors.white,
-  },
-});
+    pourText: {
+      color: Colors[theme]?.colors.white,
+    },
+  });

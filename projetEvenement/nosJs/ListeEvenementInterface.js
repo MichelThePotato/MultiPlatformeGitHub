@@ -15,9 +15,8 @@ import {
 } from './db-services';
 import ListeEvenement from './ListeEvenement';
 import ListeTemperature from './ListeTemperature';
-import { ThemeContext } from './Context';
+import {ThemeContext} from './Context';
 import Colors from '../theme/Colors';
-
 
 const ListeEvenementInterface = () => {
   const navigation = useNavigation();
@@ -27,7 +26,7 @@ const ListeEvenementInterface = () => {
    */
   const {themeChoisi, setThemeChoisi} = useContext(ThemeContext);
   const styles = getStyles(themeChoisi);
- 
+
   return (
     <View style={styles.container}>
       <ListeEvenement />
@@ -44,23 +43,24 @@ const ListeEvenementInterface = () => {
 
 export default ListeEvenementInterface;
 
-const getStyles = theme => StyleSheet.create({
-  container: {
-    padding:10,
-    flex: 1,
-    backgroundColor: Colors[theme]?.colors.themeColor,
-  },
-  roundTouch: {
-    width: 60,
-    height: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 10,
-    borderRadius: 100,
-    backgroundColor: 'orange',
-    alignSelf: 'flex-end',
-    position: 'absolute',
-    bottom: 45,
-    right: 35,
-  },
-});
+const getStyles = theme =>
+  StyleSheet.create({
+    container: {
+      padding: 10,
+      flex: 1,
+      backgroundColor: Colors[theme]?.colors.themeColor,
+    },
+    roundTouch: {
+      width: 60,
+      height: 60,
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: 10,
+      borderRadius: 100,
+      backgroundColor: 'orange',
+      alignSelf: 'flex-end',
+      position: 'absolute',
+      bottom: 45,
+      right: 35,
+    },
+  });

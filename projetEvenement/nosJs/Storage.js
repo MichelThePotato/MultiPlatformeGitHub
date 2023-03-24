@@ -172,18 +172,22 @@ export const getColorsPreferences = async key => {
 
 export async function setIsEnabledNotifStorage(key, value) {
   try {
-      await AsyncStorage.setItem(key, JSON.stringify(value))
+    await AsyncStorage.setItem(key, JSON.stringify(value));
   } catch (e) {
-      console.log("Error Storing in AsyncStorage stroing " + key + " in async Storage")
+    console.log(
+      'Error Storing in AsyncStorage stroing ' + key + ' in async Storage',
+    );
   }
 }
 
 export async function getIsEnabledNotifStorage(key) {
   try {
-      const value = await AsyncStorage.getItem(key)
-      return (value == null || value == undefined) ? undefined : value
+    const value = await AsyncStorage.getItem(key);
+    return value == null || value == undefined ? undefined : value;
   } catch (e) {
-      console.log("Error Reading in AsyncStorage stroing " + key + " in async Storage")
+    console.log(
+      'Error Reading in AsyncStorage stroing ' + key + ' in async Storage',
+    );
   }
 }
 

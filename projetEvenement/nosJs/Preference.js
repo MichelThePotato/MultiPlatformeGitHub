@@ -106,7 +106,10 @@ const Preference = () => {
           <Switch
             onValueChange={toggleSwitchNotification}
             value={isEnabledNotif}
-            trackColor={{true: Colors[themeValue]?.colors.activeColor, false: Colors[themeValue]?.colors.deactiveColor}}></Switch>
+            trackColor={{
+              true: Colors[themeValue]?.colors.activeColor,
+              false: Colors[themeValue]?.colors.deactiveColor,
+            }}></Switch>
         </View>
         <View style={styles.item}>
           <Text style={styles.pourText}>Theme : </Text>
