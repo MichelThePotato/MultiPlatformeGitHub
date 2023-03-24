@@ -15,6 +15,7 @@ import {store} from './Storage';
 import {EvenementsDispatchContext} from './Context';
 import DatePicker from 'react-native-date-picker';
 import { pushNotif } from './NotificationScreen';
+import {getIsEnabledNotifStorage} from './Storage';
 
 const Ajouterevent = () => {
   const navigation = useNavigation();
@@ -74,7 +75,11 @@ const Ajouterevent = () => {
     /**
      * une notification lorsque l'évènement est enregistrer
      */
-    pushNotif(`l'Evènement ${nom} à bien été enregistrer`);
+    console.log(await getIsEnabledNotifStorage("isNotifEnabled") + " IsNotifActif");
+    if(await getIsEnabledNotifStorage("isNotifEnabled") == "true") {
+      console.log("notif go brrrrrrrrrrrr")
+      pushNotif(`l'Evènement ${nom} à bien été enregistrer`);
+    }
   };
 
   return (

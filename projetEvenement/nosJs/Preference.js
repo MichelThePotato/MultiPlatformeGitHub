@@ -2,7 +2,7 @@ import {StyleSheet, Text, View, Switch, useColorScheme} from 'react-native';
 import React, {useState, useEffect, useCallback} from 'react';
 import {useTheme} from '@react-navigation/native';
 import RadioButtonRN from 'radio-buttons-react-native';
-import {getColorsPreferences, saveColorsPreferences} from './Storage';
+import Storage, {getColorsPreferences, saveColorsPreferences, setIsEnabledNotifStorage, getIsEnabledNotifStorage} from './Storage';
 import Colors from '../theme/Colors';
 
 const Preference = () => {
@@ -11,6 +11,8 @@ const Preference = () => {
 
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  
+  const [isEnabledNotif, setIsEnabledNotif] = useState(true);
 
   const [themeValue, setThemeValue] = useState('');
   const [initialValue, setInitialValue] = useState(0);
@@ -63,7 +65,13 @@ const Preference = () => {
 
   useEffect(() => {
     getAppTheme();
+    console.log(isEnabledNotif);
   }, [getAppTheme]);
+
+  async function toggleSwitchNotification() {
+    setIsEnabledNotif(previousStateNotif => !previousStateNotif)
+    await setIsEnabledNotifStorage("isNotifEnabled", !isEnabledNotif);
+  }
 
   const styles = getStyles(themeValue);
 
@@ -71,6 +79,10 @@ const Preference = () => {
     <View style={styles.container}>
       <View style={styles.containerOptions}>
         <Text>Settings</Text>
+        <View style={styles.item}>
+          <Text style={styles.pourText}>Notification : </Text>
+          <Switch onValueChange={toggleSwitchNotification} value={isEnabledNotif}></Switch>
+        </View>
         <View style={styles.item}>
           <Text style={styles.pourText}>Dark theme : </Text>
           <Switch onValueChange={toggleSwitch} value={isEnabled}></Switch>
