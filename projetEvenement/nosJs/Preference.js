@@ -12,7 +12,7 @@ const Preference = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   
-  const [isEnabledNotif, setIsEnabledNotif] = useState(true);
+  const [isEnabledNotif, setIsEnabledNotif] = useState(false);
 
   const [themeValue, setThemeValue] = useState('');
   const [initialValue, setInitialValue] = useState(0);
@@ -64,8 +64,11 @@ const Preference = () => {
   }, []);
 
   useEffect(() => {
+    async function loadSwitch() {
+      setIsEnabledNotif(await getIsEnabledNotifStorage("isNotifEnabled"));
+    }
+    loadSwitch();
     getAppTheme();
-    console.log(isEnabledNotif);
   }, [getAppTheme]);
 
   async function toggleSwitchNotification() {
