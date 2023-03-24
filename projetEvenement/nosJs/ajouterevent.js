@@ -209,6 +209,7 @@ const getStyles = theme =>
 
     inputs: {
       backgroundColor: Colors[theme]?.colors.activeColor,
+      width: "100%",
     },
 
     pourText: {
