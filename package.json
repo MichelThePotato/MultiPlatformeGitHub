@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@react-navigation/native": "^6.1.6"
+    "@react-navigation/native": "^6.1.6",
+    "radio-buttons-react-native": "^1.0.4"
   }
 }
