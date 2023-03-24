@@ -123,7 +123,7 @@ const App = () => {
             <Stack.Screen
               name="ListeEvenementInterface"
               component={ListeEvenementInterface}
-              options={{title: 'Mes évenements'}}></Stack.Screen>
+              options={{title: 'Acceuil'}}></Stack.Screen>
             <Stack.Screen
               name="CameraScreen"
               component={CameraScreen}></Stack.Screen>

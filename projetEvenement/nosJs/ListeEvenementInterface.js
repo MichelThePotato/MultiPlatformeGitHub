@@ -14,6 +14,8 @@ import {
   savestoreItem,
 } from './db-services';
 import ListeEvenement from './ListeEvenement';
+import ListeTemperature from './ListeTemperature';
+
 
 
 const ListeEvenementInterface = () => {
@@ -21,6 +23,7 @@ const ListeEvenementInterface = () => {
  
   return (
     <View style={styles.container}>
+      <ListeTemperature></ListeTemperature>
       <ListeEvenement />
       <TouchableOpacity
         onPress={() => {
