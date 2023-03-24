@@ -22,11 +22,11 @@ import {
   getstoreItems,
   savestoreItem,
 } from './db-services';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
-import {Camera} from 'react-native-vision-camera';
+import { Camera } from 'react-native-vision-camera';
 import Evenement from './Evenement';
-import {EvenementsContext, EvenementsDispatchContext} from './Context';
+import { EvenementsContext, EvenementsDispatchContext } from './Context';
 
 const ListeEvenement = () => {
   const drawer = useRef(null);
@@ -39,9 +39,10 @@ const ListeEvenement = () => {
   useEffect(() => {
     async function fetchFromStorage() {
       const db = await getDBConnection();
+      await createTable(db);
       const EvenementTask = await getstoreItems(db);
-      console.log(EvenementTask);
-      dispatch({type: 'init', evenements: EvenementTask});
+      //console.log(EvenementTask);
+      dispatch({ type: 'init', evenements: EvenementTask });
     }
     fetchFromStorage();
   }, []);
@@ -61,12 +62,12 @@ const ListeEvenement = () => {
   }, [cameraPermissionStatus, navigation]);
 
   const navigationView = () => (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('Preference');
         }}>
-        <View style={{flexDirection: 'row'}}>
+        <View style={{ flexDirection: 'row' }}>
           <Image
             style={styles.bordure}
             source={require('../photos/setting2.png')}
@@ -84,7 +85,7 @@ const ListeEvenement = () => {
       </TouchableOpacity>
     </View>
   );
-  console.log('Liste Evenement');
+  //console.log(evenements);
   return (
     <DrawerLayoutAndroid
       ref={drawer}
