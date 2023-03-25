@@ -1,11 +1,9 @@
 import {
-  PermissionsAndroid,
   StyleSheet,
   Text,
   View,
   ScrollView,
   DrawerLayoutAndroid,
-  Button,
   TouchableOpacity,
   Image,
 } from 'react-native';
@@ -16,12 +14,7 @@ import React, {
   useRef,
   useContext,
 } from 'react';
-import {
-  createTable,
-  getDBConnection,
-  getstoreItems,
-  savestoreItem,
-} from './db-services';
+import {createTable, getDBConnection, getstoreItems} from './db-services';
 import {useNavigation} from '@react-navigation/native';
 import ListeTemperature from './ListeTemperature';
 import {Camera} from 'react-native-vision-camera';
@@ -138,7 +131,6 @@ const getStyles = theme =>
     },
 
     containerDrawer: {
-      
       backgroundColor: Colors[theme]?.colors.sky,
     },
 

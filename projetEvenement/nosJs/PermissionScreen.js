@@ -1,6 +1,5 @@
 import {StyleSheet, Text, View, PermissionsAndroid} from 'react-native';
 import React, {useEffect} from 'react';
-import CameraScreen from './CameraScreen';
 import {useNavigation} from '@react-navigation/native';
 
 const requestCameraPermission = async () => {

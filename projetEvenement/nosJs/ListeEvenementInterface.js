@@ -1,20 +1,7 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
-import React, {useState, useContext} from 'react';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import React, {useContext} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {
-  createTable,
-  getDBConnection,
-  getstoreItems,
-  savestoreItem,
-} from './db-services';
 import ListeEvenement from './ListeEvenement';
-import ListeTemperature from './ListeTemperature';
 import {ThemeContext} from './Context';
 import Colors from '../theme/Colors';
 

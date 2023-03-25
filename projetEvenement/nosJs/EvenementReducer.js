@@ -1,5 +1,3 @@
-import {useState} from 'react';
-
 export function EvenementReducer(evenements, action) {
   switch (action.type) {
     case 'init': {

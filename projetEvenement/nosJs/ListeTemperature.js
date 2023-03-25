@@ -1,5 +1,5 @@
-import {StyleSheet, Text, View, ScrollView, Image} from 'react-native';
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
 import Temperature from './Temperature';
 import {ThemeContext} from './Context';
 import Colors from '../theme/Colors';

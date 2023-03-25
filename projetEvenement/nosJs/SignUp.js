@@ -1,7 +1,6 @@
-import {StyleSheet, Text, View, TextInput, Button} from 'react-native';
+import {StyleSheet, View, TextInput, Button} from 'react-native';
 import React, {useContext} from 'react';
 import {storeUser, getUser} from './Storage';
-import {useNavigation} from '@react-navigation/native';
 import {ThemeContext} from './Context';
 import Colors from '../theme/Colors';
 

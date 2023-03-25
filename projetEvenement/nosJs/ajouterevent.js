@@ -2,16 +2,13 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView,
   TextInput,
   Button,
   TouchableOpacity,
 } from 'react-native';
 import React, {useContext} from 'react';
-
 import {savestoreItem, getDBConnection} from './db-services';
 import {useNavigation} from '@react-navigation/native';
-import {store} from './Storage';
 import {EvenementsDispatchContext, ThemeContext} from './Context';
 import DatePicker from 'react-native-date-picker';
 import {pushNotif} from './NotificationScreen';
@@ -189,8 +186,7 @@ const getStyles = theme =>
       flex: 1,
       alignContent: 'center',
       gap: 10,
-      padding: 10,
-      paddingTop: 10,
+      padding: 20,
       backgroundColor: Colors[theme]?.colors.themeColor,
     },
     inputView: {
@@ -209,7 +205,7 @@ const getStyles = theme =>
 
     inputs: {
       backgroundColor: Colors[theme]?.colors.activeColor,
-      width: "100%",
+      width: '100%',
     },
 
     pourText: {

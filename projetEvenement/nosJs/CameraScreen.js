@@ -2,14 +2,12 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
   PermissionsAndroid,
   TouchableOpacity,
   Image,
 } from 'react-native';
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useRef} from 'react';
 import {useCameraDevices, Camera} from 'react-native-vision-camera';
-
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import {pushNotif} from './NotificationScreen';
 

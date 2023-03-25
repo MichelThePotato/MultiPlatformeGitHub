@@ -1,13 +1,3 @@
-// export const colors = {
-//   light: {
-//     themeColor: '#FFFFFF',
-//     white: '#000000',
-//     sky: '#DE5E69',
-//     gray: 'gray',
-//     ...commonColor,
-//   },
-// };
-
 /**
  * couleurs en commun avec light et dark theme
  */

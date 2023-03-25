@@ -153,8 +153,15 @@ export const saveStringColors = async (key, value) => {
 };
 
 export const saveColorsPreferences = async (key, value) => {
-  saveStringColors(key, JSON.stringify(value));
-  console('saveColorsPreferences key : ', key, ' value : ', value);
+  try {
+    saveStringColors(key, JSON.stringify(value));
+    console('saveColorsPreferences key : ', key, ' value : ', value);
+  } catch (error) {
+    console.log(
+      'problème dans la méthode saveColorsPreferences() de Storage.js : ',
+      error,
+    );
+  }
 };
 
 export const getColorsPreferences = async key => {
@@ -170,6 +177,15 @@ export const getColorsPreferences = async key => {
   }
 };
 
+export default {
+  saveStringColors,
+  saveColorsPreferences,
+  getColorsPreferences,
+};
+
+/**
+ * méthode pour la gestion de stokage des préférences de notification
+ */
 export async function setIsEnabledNotifStorage(key, value) {
   try {
     await AsyncStorage.setItem(key, JSON.stringify(value));
@@ -190,9 +206,3 @@ export async function getIsEnabledNotifStorage(key) {
     );
   }
 }
-
-export default {
-  saveStringColors,
-  saveColorsPreferences,
-  getColorsPreferences,
-};

@@ -5,12 +5,9 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
-  Alert,
-  ScrollView,
 } from 'react-native';
-import React, {useCallback, useEffect, useState, useContext} from 'react';
-import {getColorsPreferences, verifyUsers} from './Storage';
-import {useTheme} from '@react-navigation/native';
+import React, {useContext} from 'react';
+import {verifyUsers} from './Storage';
 import Colors from '../theme/Colors';
 import {ThemeContext} from './Context';
 

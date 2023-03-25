@@ -1,7 +1,5 @@
-import {StyleSheet, Text, View, TouchableOpacity, Button} from 'react-native';
-import React, {useContext, useEffect, useState, useRoute} from 'react';
-
-import {LieuxContext} from './LieuContext';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import React, {useContext} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {deleteTodoItem, getDBConnection} from './db-services';
 import {

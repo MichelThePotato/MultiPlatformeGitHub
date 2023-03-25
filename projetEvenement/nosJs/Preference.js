@@ -1,8 +1,7 @@
 import {StyleSheet, Text, View, Switch, useColorScheme} from 'react-native';
 import React, {useState, useEffect, useCallback, useContext} from 'react';
-import {useTheme} from '@react-navigation/native';
 import RadioButtonRN from 'radio-buttons-react-native';
-import Storage, {
+import {
   getColorsPreferences,
   saveColorsPreferences,
   setIsEnabledNotifStorage,
@@ -70,29 +69,48 @@ const Preference = () => {
   };
 
   const getAppTheme = useCallback(async () => {
-    const theme = await getColorsPreferences('Theme');
-    const isDefault = await getColorsPreferences('IsDefault');
-    isDefault ? themeOperations('default') : themeOperations(theme);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    try {
+      const theme = await getColorsPreferences('Theme');
+      const isDefault = await getColorsPreferences('IsDefault');
+      isDefault ? themeOperations('default') : themeOperations(theme);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    } catch (error) {
+      console.log('erreur dans getAppTheme() de Preference.js : ', error);
+    }
   }, []);
 
   const setTheme = useCallback(async (theme, isDefault) => {
-    saveColorsPreferences('Theme', theme);
-    saveColorsPreferences('IsDefault', isDefault);
-    setThemeValue(theme);
+    try {
+      saveColorsPreferences('Theme', theme);
+      saveColorsPreferences('IsDefault', isDefault);
+      setThemeValue(theme);
+    } catch (error) {
+      console.log('erreur dans setTheme() de Preference.js : ', error);
+    }
   }, []);
 
   useEffect(() => {
-    async function loadSwitch() {
-      setIsEnabledNotif(await getIsEnabledNotifStorage('isNotifEnabled'));
+    try {
+      async function loadSwitch() {
+        setIsEnabledNotif(await getIsEnabledNotifStorage('isNotifEnabled'));
+      }
+      loadSwitch();
+      getAppTheme();
+    } catch (error) {
+      console.log('erreur dans useffect de Preference.js : ', error);
     }
-    loadSwitch();
-    getAppTheme();
   }, [getAppTheme]);
 
   async function toggleSwitchNotification() {
     setIsEnabledNotif(previousStateNotif => !previousStateNotif);
-    await setIsEnabledNotifStorage('isNotifEnabled', !isEnabledNotif);
+    try {
+      await setIsEnabledNotifStorage('isNotifEnabled', !isEnabledNotif);
+    } catch (error) {
+      console.log(
+        'problème dans toggleSwitchNotification() de Preference.js : ',
+        error,
+      );
+    }
   }
 
   const styles = getStyles(themeValue);

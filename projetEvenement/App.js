@@ -1,32 +1,19 @@
 import {
-  Settings,
   StyleSheet,
-  Text,
-  View,
   Image,
   TouchableOpacity,
-  PermissionsAndroid,
   useColorScheme,
 } from 'react-native';
-import React, {
-  useState,
-  useEffect,
-  useCallback,
-  useReducer,
-  useContext,
-} from 'react';
+import React, {useState, useEffect, useCallback, useReducer} from 'react';
 import {
   NavigationContainer,
   useNavigationContainerRef,
-  DarkTheme,
-  DefaultTheme,
 } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {useCameraDevices, Camera} from 'react-native-vision-camera';
+import {Camera} from 'react-native-vision-camera';
 import Login from './nosJs/Login';
 import SignUp from './nosJs/SignUp';
 import Preference from './nosJs/Preference';
-import ListeEvenement from './nosJs/ListeEvenement';
 import DetailEvent from './nosJs/DetailEvent';
 import Ajouterevent from './nosJs/ajouterevent';
 import {EvenementReducer} from './nosJs/EvenementReducer';
@@ -72,28 +59,36 @@ const App = () => {
   const sendValueTheme = {themeChoisi, setThemeChoisi};
 
   const getAppTheme = useCallback(async () => {
-    const theme = await getColorsPreferences('Theme');
-    setThemeChoisi(theme);
+    try {
+      const theme = await getColorsPreferences('Theme');
+      setThemeChoisi(theme);
+    } catch (error) {
+      console.log('erreur dans getAppTheme : ', error);
+    }
   }, []);
 
   useEffect(() => {
-    Camera.getCameraPermissionStatus().then(setCameraPermission);
+    try {
+      Camera.getCameraPermissionStatus().then(setCameraPermission);
 
-    async function fetchFromStorage() {
-      const db = await getDBConnection();
-      await createTable(db);
-      const EvenementTask = await getstoreItems(db);
-      //console.log(EvenementTask);
-      dispatch({type: 'init', evenements: EvenementTask});
+      async function fetchFromStorage() {
+        const db = await getDBConnection();
+        await createTable(db);
+        const EvenementTask = await getstoreItems(db);
+        //console.log(EvenementTask);
+        dispatch({type: 'init', evenements: EvenementTask});
+      }
+
+      fetchFromStorage();
+
+      /**
+       * appeller la méthode qui set le theme qui à été choisi dans les préférence
+       */
+      setAppTheme();
+      getAppTheme();
+    } catch (error) {
+      console.log('problème dans le useEffect de App,js: ', error);
     }
-
-    fetchFromStorage();
-
-    /**
-     * appeller la méthode qui set le theme qui à été choisi dans les préférence
-     */
-    setAppTheme();
-    getAppTheme();
   }, [setAppTheme, getAppTheme]);
 
   console.log(`Re-rendering Navigator. Camera: ${cameraPermission}`);
@@ -205,6 +200,13 @@ const App = () => {
                 component={DetailEvent}
                 options={({route}) => ({
                   title: route.params.name,
+                  headerStyle: {
+                    backgroundColor:
+                      Colors[themeChoisi]?.colors.headerBackground,
+                  },
+                  headerTitleStyle: {
+                    color: Colors[themeChoisi]?.colors.white,
+                  },
                 })}></Stack.Screen>
             </Stack.Navigator>
           </ThemeContext.Provider>
