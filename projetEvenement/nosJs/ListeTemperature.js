@@ -27,7 +27,7 @@ const ListeTemperature = () => {
       }
 
       setData(jsonArray);
-      console.log(data);
+      //console.log(data);
     } catch (error) {
       console.error(error);
     }
