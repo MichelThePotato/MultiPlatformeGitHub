@@ -77,7 +77,7 @@ const Ajouterevent = () => {
     );
     if ((await getIsEnabledNotifStorage('isNotifEnabled')) == 'true') {
       console.log('notif go brrrrrrrrrrrr');
-      pushNotif(`l'Evènement ${nom} à bien été enregistrer`);
+      pushNotif(`L'événement ${nom} a bien été enregistré`);
     }
   };
 
